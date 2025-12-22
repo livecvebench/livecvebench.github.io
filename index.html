@@ -30,6 +30,19 @@
                 <div class="navbar-end">
                     <a class="navbar-item" href="#leaderboard">Leaderboard</a>
                     <a class="navbar-item" href="#about">About</a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">Submit</a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="submit.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>GUIDE (EN)</span>
+                            </a>
+                            <a class="navbar-item" href="submit-zh.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>指南 (中文)</span>
+                            </a>
+                        </div>
+                    </div>
                     <a class="navbar-item" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
                         <span class="icon"><i class="fab fa-github"></i></span>
                         <span>GitHub</span>
@@ -47,11 +60,12 @@
     <section class="hero is-medium hero-gradient">
         <div class="hero-body">
             <div class="container has-text-centered">
+                <p class="author-affiliations">Kuaishou Kclear Team × HIT-SCIR-LACG</p>
                 <h1 class="title is-1 main-title">
                     LiveCVEBench
                 </h1>
                 <h2 class="subtitle is-4 main-subtitle">
-                    A Contamination-Free Benchmark for Evaluating LLMs on CVE Vulnerability Detection and Patching
+                    A Contamination-Free Agentic Benchmark for Evaluating Code Agents on Real-World CVE Vulnerability Fixing
                 </h2>
                 <div class="buttons is-centered mt-5">
                     <a class="button is-primary is-medium" href="#leaderboard">
@@ -77,12 +91,16 @@
                 </h2>
                 <div class="content">
                     <p>
-                        <strong>LiveCVEBench</strong> is a continuously updated benchmark for evaluating Large Language Models (LLMs)
-                        on real-world CVE (Common Vulnerabilities and Exposures) vulnerability detection and patching tasks.
+                        <strong>LiveCVEBench</strong> is a continuously updated <strong>agentic benchmark</strong> for evaluating Code Agents
+                        on real-world CVE (Common Vulnerabilities and Exposures) vulnerability fixing tasks.
+                    </p>
+                    <p>
+                        Agents are deployed in <strong>real development environments</strong> where they must autonomously explore codebases,
+                        understand vulnerability context, and implement proper fixes — just like human developers would.
                     </p>
                     <p>
                         Unlike static benchmarks that may suffer from data contamination, LiveCVEBench sources new CVEs
-                        after model training cutoff dates, ensuring a fair and unbiased evaluation of model capabilities.
+                        after model training cutoff dates, ensuring a fair and unbiased evaluation of agent capabilities.
                     </p>
                     <div class="features columns is-multiline mt-5">
                         <div class="column is-4">
@@ -101,9 +119,9 @@
                         </div>
                         <div class="column is-4">
                             <div class="feature-card">
-                                <span class="feature-icon"><i class="fas fa-tasks"></i></span>
-                                <h4>Multiple Tasks</h4>
-                                <p>Detection, localization, and patch generation</p>
+                                <span class="feature-icon"><i class="fas fa-robot"></i></span>
+                                <h4>Agentic Evaluation</h4>
+                                <p>Autonomous exploration and fixing in real environments</p>
                             </div>
                         </div>
                     </div>
@@ -121,25 +139,81 @@
                     Leaderboard
                 </h2>
 
+                <!-- Instruction Type Tabs -->
+                <div class="tabs is-centered is-boxed mb-5">
+                    <ul>
+                        <li class="tab-label">
+                            <span>Task Input:</span>
+                        </li>
+                        <li class="is-active" data-tab="user_report">
+                            <a>
+                                <span class="icon"><i class="fas fa-user-edit"></i></span>
+                                <span>User Report</span>
+                            </a>
+                        </li>
+                        <li data-tab="cve_description">
+                            <a>
+                                <span class="icon"><i class="fas fa-file-alt"></i></span>
+                                <span>CVE Description</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Timeline Filter -->
+                <div class="timeline-filter mb-5">
+                    <div class="timeline-header">
+                        <div class="timeline-buttons">
+                            <button class="button timeline-btn active" data-year="all">All</button>
+                            <button class="button timeline-btn" data-year="2023">2023</button>
+                            <button class="button timeline-btn" data-year="2024">2024</button>
+                            <button class="button timeline-btn" data-year="2025">2025</button>
+                        </div>
+                        <span class="timeline-cve-count" id="timelineCVECount"></span>
+                    </div>
+                    <div class="date-range-slider" style="display: none;">
+                        <div class="range-slider-container">
+                            <span class="date-label date-start" id="dateStart">2023-02-15</span>
+                            <div class="range-track"></div>
+                            <div class="range-selected" id="rangeSelected"></div>
+                            <input type="range" id="rangeMin" class="range-input" min="0" max="100" value="0">
+                            <input type="range" id="rangeMax" class="range-input" min="0" max="100" value="100">
+                            <span class="date-label date-end" id="dateEnd">2025-07-20</span>
+                        </div>
+                        <div class="timeline-ticks" id="timelineTicks"></div>
+                    </div>
+                </div>
+
                 <!-- Filters -->
                 <div class="filters mb-5">
-                    <div class="field is-grouped is-grouped-multiline">
-                        <div class="control">
+                    <div class="filter-groups">
+                        <div class="filter-group">
+                            <label class="filter-label">Model</label>
                             <div class="select">
-                                <select id="taskFilter">
-                                    <option value="all">All Tasks</option>
-                                    <option value="detection">Detection</option>
-                                    <option value="localization">Localization</option>
-                                    <option value="patching">Patching</option>
+                                <select id="modelFilter">
+                                    <option value="all">All</option>
+                                </select>
+                            </div>
+                            <div class="select">
+                                <select id="modelTypeFilter">
+                                    <option value="all">Open & Closed</option>
+                                    <option value="open">Open Only</option>
+                                    <option value="closed">Closed Only</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="control">
+                        <div class="filter-group">
+                            <label class="filter-label">Agent</label>
                             <div class="select">
-                                <select id="modelTypeFilter">
-                                    <option value="all">All Models</option>
-                                    <option value="open">Open Source</option>
-                                    <option value="closed">Closed Source</option>
+                                <select id="agentFilter">
+                                    <option value="all">All</option>
+                                </select>
+                            </div>
+                            <div class="select">
+                                <select id="agentTypeFilter">
+                                    <option value="all">Open & Closed</option>
+                                    <option value="open">Open Only</option>
+                                    <option value="closed">Closed Only</option>
                                 </select>
                             </div>
                         </div>
@@ -151,20 +225,37 @@
                     <table class="table is-fullwidth is-hoverable leaderboard-table">
                         <thead>
                             <tr>
-                                <th class="has-text-centered">Rank</th>
-                                <th>Model</th>
-                                <th class="has-text-centered">Type</th>
-                                <th class="has-text-centered sortable" data-sort="detection">
-                                    Detection <i class="fas fa-sort"></i>
+                                <th class="has-text-centered sortable" rowspan="2" data-sort="rank">
+                                    # <i class="fas fa-sort"></i>
                                 </th>
-                                <th class="has-text-centered sortable" data-sort="localization">
-                                    Localization <i class="fas fa-sort"></i>
+                                <th class="sortable" rowspan="2" data-sort="model">
+                                    Model <i class="fas fa-sort"></i>
                                 </th>
-                                <th class="has-text-centered sortable" data-sort="patching">
-                                    Patching <i class="fas fa-sort"></i>
+                                <th class="sortable" rowspan="2" data-sort="agent">
+                                    Agent <i class="fas fa-sort"></i>
                                 </th>
-                                <th class="has-text-centered sortable active" data-sort="average">
-                                    Average <i class="fas fa-sort-down"></i>
+                                <th class="has-text-centered sortable" rowspan="2" data-sort="totalCVEs">
+                                    <span class="coverage-header">Tested<br><span id="totalCVEsHeader">/ 0</span></span>
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable active" rowspan="2" data-sort="accuracy">
+                                    Accuracy <i class="fas fa-sort-down"></i>
+                                </th>
+                                <th class="has-text-centered" colspan="2">Success (avg)</th>
+                                <th class="has-text-centered" colspan="2">Failed (avg)</th>
+                            </tr>
+                            <tr>
+                                <th class="has-text-centered sortable" data-sort="success_turns">
+                                    Turns <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable" data-sort="success_tokens">
+                                    Tokens <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable" data-sort="failed_turns">
+                                    Turns <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable" data-sort="failed_tokens">
+                                    Tokens <i class="fas fa-sort"></i>
                                 </th>
                             </tr>
                         </thead>
@@ -174,11 +265,25 @@
                     </table>
                 </div>
 
-                <p class="has-text-grey is-size-7 mt-4">
+                <p class="has-text-grey is-size-7 mt-4 leaderboard-footer">
                     <i class="fas fa-info-circle"></i>
                     Last updated: <span id="lastUpdated">-</span> |
-                    Total CVEs: <span id="totalCVEs">-</span>
+                    CVEs: <span id="filteredCVEs">-</span> / <span id="totalCVEs">-</span>
                 </p>
+
+                <div class="compatibility-note mt-5">
+                    <span class="icon"><i class="fas fa-check-circle"></i></span>
+                    <span>Fully compatible with <a href="https://github.com/terminal-bench/terminal-bench" target="_blank">Terminal Bench</a> evaluation framework</span>
+                </div>
+
+                <div class="notification is-warning is-light mt-4">
+                    <p class="is-size-7">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Note:</strong> The official Terminal Bench statistics script has some issues.
+                        The <strong>terminus-2</strong> results are our own verified statistics, while other agents' turn/token data
+                        are not provided by Terminal Bench (shown as "-").
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -189,15 +294,48 @@
             <div class="content-box has-text-centered">
                 <h2 class="title is-3 section-title">
                     <span class="icon"><i class="fas fa-plus-circle"></i></span>
-                    Submit Your Model
+                    Submit Your Results
                 </h2>
                 <p class="mb-4">
-                    Want to evaluate your model on LiveCVEBench? Submit your results via a GitHub Pull Request.
+                    Want to submit your Code Agent's results to the leaderboard? Check out our submission guidelines.
                 </p>
-                <a class="button is-primary" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
-                    <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Submit via GitHub</span>
-                </a>
+                <div class="buttons is-centered">
+                    <a class="button is-primary" href="submit.html">
+                        <span class="icon"><i class="fas fa-book"></i></span>
+                        <span>Submission Guide (EN)</span>
+                    </a>
+                    <a class="button is-info" href="submit-zh.html">
+                        <span class="icon"><i class="fas fa-book"></i></span>
+                        <span>提交指南 (中文)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acknowledgments Section -->
+    <section class="section" id="acknowledgments">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-heart"></i></span>
+                    Acknowledgments
+                </h2>
+                <div class="content">
+                    <p>
+                        We greatly appreciate the following projects:
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="https://www.tbench.ai/" target="_blank"><strong>Terminal Bench</strong></a> —
+                            Provides a unified evaluation framework for code agents.
+                        </li>
+                        <li>
+                            <a href="https://github.com/bytedance/PatchEval" target="_blank"><strong>PatchEval</strong></a> —
+                            We converted some of their CVEs to Terminal Bench format and included them in our leaderboard.
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -207,7 +345,13 @@
         <div class="container">
             <div class="content has-text-centered">
                 <p>
-                    <strong>LiveCVEBench</strong> by <a href="https://github.com/Luowaterbi" target="_blank">Luowaterbi</a>.
+                    <strong>LiveCVEBench</strong>
+                </p>
+                <p>
+                    If you have any suggestions or would like to join/contribute to this project, please contact <a href="mailto:xzluo@ir.hit.edu.cn">xzluo@ir.hit.edu.cn</a>!
+                </p>
+                <p>
+                    Thank you for your interest and support!
                 </p>
                 <p class="is-size-7 has-text-grey">
                     Licensed under MIT License.
@@ -216,6 +360,6 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=5"></script>
 </body>
 </html>

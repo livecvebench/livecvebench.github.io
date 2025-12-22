@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提交指南 - LiveCVEBench</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .code-block-wrapper {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 6px 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #2563eb;
+        }
+        .copy-btn.copied {
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-name" href="index.html">
+                    <span class="brand-icon"><i class="fas fa-shield-virus"></i></span>
+                    <span>LiveCVEBench</span>
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="index.html#leaderboard">排行榜</a>
+                    <a class="navbar-item" href="index.html#about">关于</a>
+                    <a class="navbar-item" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container">
+            <div class="content-box">
+                <div class="language-switch has-text-right mb-4">
+                    <a href="submit.html" class="button is-small is-primary is-outlined">
+                        <span class="icon"><i class="fas fa-language"></i></span>
+                        <span>English</span>
+                    </a>
+                </div>
+
+                <h1 class="title is-2">
+                    <span class="icon"><i class="fas fa-file-upload"></i></span>
+                    提交指南
+                </h1>
+
+                <div class="content">
+                    <h2 class="title is-4">概述</h2>
+                    <p>
+                        要将您的 Code Agent 评测结果提交到 LiveCVEBench 排行榜，
+                        您需要向我们的 GitHub 仓库创建一个 Pull Request，提交您的结果文件。
+                    </p>
+
+                    <h2 class="title is-4 mt-5">提交格式</h2>
+                    <p>创建一个 JSON 文件，格式如下：</p>
+
+                    <div class="code-block-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="fas fa-copy"></i> 复制
+                        </button>
+                        <pre><code>{
+    "model": "模型名称",
+    "agent": "Agent名称",
+    "modelType": "open",  // 或 "closed"
+    "agentType": "open",  // 或 "closed"
+    "instruction_type": "user_report",  // 或 "cve_description"
+    "cve_results": {
+        "CVE-2025-0001": {
+            "success": true,
+            "turns": 3,
+            "tokens": 14500
+        },
+        "CVE-2025-0002": {
+            "success": false,
+            "turns": 8,
+            "tokens": 42000
+        }
+        // ... 更多 CVE 结果
+    }
+}</code></pre>
+                    </div>
+
+                    <h2 class="title is-4 mt-5">字段说明</h2>
+                    <table class="table is-fullwidth is-striped">
+                        <thead>
+                            <tr>
+                                <th>字段</th>
+                                <th>类型</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>model</code></td>
+                                <td>string</td>
+                                <td>LLM 模型名称（如 "GPT-4o"、"Claude-3.5-Sonnet"）</td>
+                            </tr>
+                            <tr>
+                                <td><code>agent</code></td>
+                                <td>string</td>
+                                <td>Agent 框架名称（如 "OpenHands"、"Aider"）</td>
+                            </tr>
+                            <tr>
+                                <td><code>modelType</code></td>
+                                <td>"open" | "closed"</td>
+                                <td>模型权重是否公开可用</td>
+                            </tr>
+                            <tr>
+                                <td><code>agentType</code></td>
+                                <td>"open" | "closed"</td>
+                                <td>Agent 源代码是否公开可用</td>
+                            </tr>
+                            <tr>
+                                <td><code>instruction_type</code></td>
+                                <td>"user_report" | "cve_description"</td>
+                                <td>任务输入类型：user_report（推荐）或 cve_description</td>
+                            </tr>
+                            <tr>
+                                <td><code>success</code></td>
+                                <td>boolean</td>
+                                <td>CVE 是否成功修复</td>
+                            </tr>
+                            <tr>
+                                <td><code>turns</code></td>
+                                <td>number</td>
+                                <td>交互轮次数</td>
+                            </tr>
+                            <tr>
+                                <td><code>tokens</code></td>
+                                <td>number</td>
+                                <td>消耗的总 token 数（输入 + 输出）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2 class="title is-4 mt-5">提交步骤</h2>
+                    <ol>
+                        <li>Fork <a href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">LiveCVEBench 仓库</a></li>
+                        <li>创建您的结果文件，命名为 <code>submissions/{Model}_{Agent}.json</code></li>
+                        <li>提交并推送您的更改</li>
+                        <li>创建 Pull Request，包含：
+                            <ul>
+                                <li>模型/Agent 的简要描述</li>
+                                <li>模型/Agent 仓库链接（如果开源）</li>
+                                <li>相关配置详情</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h2 class="title is-4 mt-5">评测环境</h2>
+                    <p>
+                        LiveCVEBench 完全兼容 <a href="https://github.com/terminal-bench/terminal-bench" target="_blank">Terminal Bench</a>
+                        评测框架。您可以使用 Terminal Bench 在我们的 CVE 任务上运行您的 Agent 并生成结果文件。
+                    </p>
+
+                    <div class="notification is-info is-light mt-5">
+                        <p>
+                            <strong><i class="fas fa-question-circle"></i> 有问题？</strong><br>
+                            如果您对提交流程有任何疑问，请在我们的
+                            <a href="https://github.com/Luowaterbi/LiveCVEBench/issues" target="_blank">GitHub 仓库</a> 提交 Issue。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="has-text-centered mt-6">
+                    <a class="button is-primary is-medium" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>前往 GitHub 仓库</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>LiveCVEBench</strong> · 联系邮箱: <a href="mailto:xzluo@ir.hit.edu.cn">xzluo@ir.hit.edu.cn</a>
+                </p>
+                <p class="is-size-7 has-text-grey">
+                    基于 MIT 许可证开源。
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('code');
+            const text = codeBlock.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> 复制';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+</body>
+</html>

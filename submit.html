@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Guide - LiveCVEBench</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .code-block-wrapper {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 6px 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #2563eb;
+        }
+        .copy-btn.copied {
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-name" href="index.html">
+                    <span class="brand-icon"><i class="fas fa-shield-virus"></i></span>
+                    <span>LiveCVEBench</span>
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="index.html#leaderboard">Leaderboard</a>
+                    <a class="navbar-item" href="index.html#about">About</a>
+                    <a class="navbar-item" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container">
+            <div class="content-box">
+                <div class="language-switch has-text-right mb-4">
+                    <a href="submit-zh.html" class="button is-small is-info is-outlined">
+                        <span class="icon"><i class="fas fa-language"></i></span>
+                        <span>中文</span>
+                    </a>
+                </div>
+
+                <h1 class="title is-2">
+                    <span class="icon"><i class="fas fa-file-upload"></i></span>
+                    Submission Guide
+                </h1>
+
+                <div class="content">
+                    <h2 class="title is-4">Overview</h2>
+                    <p>
+                        To submit your Code Agent's evaluation results to the LiveCVEBench leaderboard,
+                        you need to create a Pull Request to our GitHub repository with your results file.
+                    </p>
+
+                    <h2 class="title is-4 mt-5">Submission Format</h2>
+                    <p>Create a JSON file with the following structure:</p>
+
+                    <div class="code-block-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <pre><code>{
+    "model": "Your-Model-Name",
+    "agent": "Your-Agent-Name",
+    "modelType": "open",
+    "agentType": "open",
+    "instruction_type": "user_report",
+    "cve_results": {
+        "CVE-2025-0001": {
+            "success": true,
+            "turns": 3,
+            "tokens": 14500
+        },
+        "CVE-2025-0002": {
+            "success": false,
+            "turns": 8,
+            "tokens": 42000
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <h2 class="title is-4 mt-5">Field Descriptions</h2>
+                    <table class="table is-fullwidth is-striped">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>model</code></td>
+                                <td>string</td>
+                                <td>Name of the LLM model (e.g., "GPT-4o", "Claude-3.5-Sonnet")</td>
+                            </tr>
+                            <tr>
+                                <td><code>agent</code></td>
+                                <td>string</td>
+                                <td>Name of the agent framework (e.g., "OpenHands", "Aider")</td>
+                            </tr>
+                            <tr>
+                                <td><code>modelType</code></td>
+                                <td>"open" | "closed"</td>
+                                <td>Whether the model weights are publicly available</td>
+                            </tr>
+                            <tr>
+                                <td><code>agentType</code></td>
+                                <td>"open" | "closed"</td>
+                                <td>Whether the agent source code is publicly available</td>
+                            </tr>
+                            <tr>
+                                <td><code>instruction_type</code></td>
+                                <td>"user_report" | "cve_description"</td>
+                                <td>Type of task input: user_report (recommended) or cve_description</td>
+                            </tr>
+                            <tr>
+                                <td><code>success</code></td>
+                                <td>boolean</td>
+                                <td>Whether the CVE was successfully fixed</td>
+                            </tr>
+                            <tr>
+                                <td><code>turns</code></td>
+                                <td>number</td>
+                                <td>Number of interaction turns taken</td>
+                            </tr>
+                            <tr>
+                                <td><code>tokens</code></td>
+                                <td>number</td>
+                                <td>Total tokens consumed (input + output)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2 class="title is-4 mt-5">Submission Steps</h2>
+                    <ol>
+                        <li>Fork the <a href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">LiveCVEBench repository</a></li>
+                        <li>Create your results file as <code>submissions/{Model}_{Agent}.json</code></li>
+                        <li>Commit and push your changes</li>
+                        <li>Create a Pull Request with:
+                            <ul>
+                                <li>A brief description of your model/agent</li>
+                                <li>Link to model/agent repository (if open source)</li>
+                                <li>Any relevant configuration details</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h2 class="title is-4 mt-5">Evaluation Environment</h2>
+                    <p>
+                        LiveCVEBench is fully compatible with the <a href="https://github.com/terminal-bench/terminal-bench" target="_blank">Terminal Bench</a>
+                        evaluation framework. You can use Terminal Bench to run your agent on our CVE tasks and generate the results file.
+                    </p>
+
+                    <div class="notification is-info is-light mt-5">
+                        <p>
+                            <strong><i class="fas fa-question-circle"></i> Questions?</strong><br>
+                            If you have any questions about the submission process, please open an issue on our
+                            <a href="https://github.com/Luowaterbi/LiveCVEBench/issues" target="_blank">GitHub repository</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="has-text-centered mt-6">
+                    <a class="button is-primary is-medium" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>Go to GitHub Repository</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>LiveCVEBench</strong> · Contact: <a href="mailto:xzluo@ir.hit.edu.cn">xzluo@ir.hit.edu.cn</a>
+                </p>
+                <p class="is-size-7 has-text-grey">
+                    Licensed under MIT License.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('code');
+            const text = codeBlock.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+</body>
+</html>
