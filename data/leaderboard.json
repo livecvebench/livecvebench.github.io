@@ -1,0 +1,89 @@
+{
+    "metadata": {
+        "lastUpdated": "2024-12-22",
+        "totalCVEs": 150,
+        "version": "1.0.0"
+    },
+    "models": [
+        {
+            "name": "GPT-4o",
+            "org": "OpenAI",
+            "type": "closed",
+            "scores": {
+                "detection": 78.5,
+                "localization": 72.3,
+                "patching": 65.8
+            }
+        },
+        {
+            "name": "Claude-3.5-Sonnet",
+            "org": "Anthropic",
+            "type": "closed",
+            "scores": {
+                "detection": 76.2,
+                "localization": 74.1,
+                "patching": 68.4
+            }
+        },
+        {
+            "name": "Gemini-1.5-Pro",
+            "org": "Google",
+            "type": "closed",
+            "scores": {
+                "detection": 74.8,
+                "localization": 70.5,
+                "patching": 62.1
+            }
+        },
+        {
+            "name": "DeepSeek-V3",
+            "org": "DeepSeek",
+            "type": "open",
+            "scores": {
+                "detection": 73.5,
+                "localization": 69.8,
+                "patching": 60.2
+            }
+        },
+        {
+            "name": "Qwen2.5-72B",
+            "org": "Alibaba",
+            "type": "open",
+            "scores": {
+                "detection": 71.2,
+                "localization": 67.4,
+                "patching": 58.9
+            }
+        },
+        {
+            "name": "Llama-3.1-70B",
+            "org": "Meta",
+            "type": "open",
+            "scores": {
+                "detection": 68.9,
+                "localization": 64.2,
+                "patching": 55.3
+            }
+        },
+        {
+            "name": "Mixtral-8x22B",
+            "org": "Mistral AI",
+            "type": "open",
+            "scores": {
+                "detection": 66.5,
+                "localization": 62.8,
+                "patching": 52.1
+            }
+        },
+        {
+            "name": "CodeLlama-70B",
+            "org": "Meta",
+            "type": "open",
+            "scores": {
+                "detection": 64.2,
+                "localization": 60.5,
+                "patching": 48.7
+            }
+        }
+    ]
+}

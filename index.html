@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCVEBench - A Contamination-Free Benchmark for Evaluating LLMs on CVE Vulnerability Detection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-name" href="#">
+                    <span class="brand-icon"><i class="fas fa-shield-virus"></i></span>
+                    <span>LiveCVEBench</span>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="#leaderboard">Leaderboard</a>
+                    <a class="navbar-item" href="#about">About</a>
+                    <a class="navbar-item" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="navbar-item" href="#" target="_blank">
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span>Paper</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero is-medium hero-gradient">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title is-1 main-title">
+                    LiveCVEBench
+                </h1>
+                <h2 class="subtitle is-4 main-subtitle">
+                    A Contamination-Free Benchmark for Evaluating LLMs on CVE Vulnerability Detection and Patching
+                </h2>
+                <div class="buttons is-centered mt-5">
+                    <a class="button is-primary is-medium" href="#leaderboard">
+                        <span class="icon"><i class="fas fa-trophy"></i></span>
+                        <span>View Leaderboard</span>
+                    </a>
+                    <a class="button is-light is-medium" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-info-circle"></i></span>
+                    About LiveCVEBench
+                </h2>
+                <div class="content">
+                    <p>
+                        <strong>LiveCVEBench</strong> is a continuously updated benchmark for evaluating Large Language Models (LLMs)
+                        on real-world CVE (Common Vulnerabilities and Exposures) vulnerability detection and patching tasks.
+                    </p>
+                    <p>
+                        Unlike static benchmarks that may suffer from data contamination, LiveCVEBench sources new CVEs
+                        after model training cutoff dates, ensuring a fair and unbiased evaluation of model capabilities.
+                    </p>
+                    <div class="features columns is-multiline mt-5">
+                        <div class="column is-4">
+                            <div class="feature-card">
+                                <span class="feature-icon"><i class="fas fa-sync-alt"></i></span>
+                                <h4>Continuously Updated</h4>
+                                <p>New CVEs added regularly to prevent data contamination</p>
+                            </div>
+                        </div>
+                        <div class="column is-4">
+                            <div class="feature-card">
+                                <span class="feature-icon"><i class="fas fa-bug"></i></span>
+                                <h4>Real-World Vulnerabilities</h4>
+                                <p>Based on actual CVEs from production software</p>
+                            </div>
+                        </div>
+                        <div class="column is-4">
+                            <div class="feature-card">
+                                <span class="feature-icon"><i class="fas fa-tasks"></i></span>
+                                <h4>Multiple Tasks</h4>
+                                <p>Detection, localization, and patch generation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="section" id="leaderboard">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-trophy"></i></span>
+                    Leaderboard
+                </h2>
+
+                <!-- Filters -->
+                <div class="filters mb-5">
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="select">
+                                <select id="taskFilter">
+                                    <option value="all">All Tasks</option>
+                                    <option value="detection">Detection</option>
+                                    <option value="localization">Localization</option>
+                                    <option value="patching">Patching</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="select">
+                                <select id="modelTypeFilter">
+                                    <option value="all">All Models</option>
+                                    <option value="open">Open Source</option>
+                                    <option value="closed">Closed Source</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Table -->
+                <div class="table-container">
+                    <table class="table is-fullwidth is-hoverable leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th class="has-text-centered">Rank</th>
+                                <th>Model</th>
+                                <th class="has-text-centered">Type</th>
+                                <th class="has-text-centered sortable" data-sort="detection">
+                                    Detection <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable" data-sort="localization">
+                                    Localization <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable" data-sort="patching">
+                                    Patching <i class="fas fa-sort"></i>
+                                </th>
+                                <th class="has-text-centered sortable active" data-sort="average">
+                                    Average <i class="fas fa-sort-down"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                            <!-- Data will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="has-text-grey is-size-7 mt-4">
+                    <i class="fas fa-info-circle"></i>
+                    Last updated: <span id="lastUpdated">-</span> |
+                    Total CVEs: <span id="totalCVEs">-</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submit Section -->
+    <section class="section" id="submit">
+        <div class="container">
+            <div class="content-box has-text-centered">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    Submit Your Model
+                </h2>
+                <p class="mb-4">
+                    Want to evaluate your model on LiveCVEBench? Submit your results via a GitHub Pull Request.
+                </p>
+                <a class="button is-primary" href="https://github.com/Luowaterbi/LiveCVEBench" target="_blank">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Submit via GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>LiveCVEBench</strong> by <a href="https://github.com/Luowaterbi" target="_blank">Luowaterbi</a>.
+                </p>
+                <p class="is-size-7 has-text-grey">
+                    Licensed under MIT License.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
