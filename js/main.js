@@ -396,7 +396,10 @@ function renderLeaderboard() {
             return b.accuracy - a.accuracy;
         }
         // Same accuracy: sort by success tokens (lower is better)
-        return a.success.tokens - b.success.tokens;
+        // But 0 (no data) should be at the bottom
+        const aTokens = a.success.tokens || Infinity;
+        const bTokens = b.success.tokens || Infinity;
+        return aTokens - bTokens;
     });
 
     // Assign ranks with ties (1, 1, 1, 4, 4 style)
