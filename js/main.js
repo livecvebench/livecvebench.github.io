@@ -390,10 +390,30 @@ function renderLeaderboard() {
         })
         .filter(item => item.accuracy !== undefined);
 
-    // First sort by accuracy to get original rank
-    const byAccuracy = [...filteredData].sort((a, b) => b.accuracy - a.accuracy);
+    // First sort by accuracy (desc), then by success tokens (asc) for tie-breaking
+    const byAccuracy = [...filteredData].sort((a, b) => {
+        if (b.accuracy !== a.accuracy) {
+            return b.accuracy - a.accuracy;
+        }
+        // Same accuracy: sort by success tokens (lower is better)
+        return a.success.tokens - b.success.tokens;
+    });
+
+    // Assign ranks with ties (1, 1, 1, 4, 4 style)
+    let currentRank = 1;
     byAccuracy.forEach((item, idx) => {
-        item.originalRank = idx + 1;
+        if (idx === 0) {
+            item.originalRank = 1;
+        } else {
+            const prevItem = byAccuracy[idx - 1];
+            if (item.accuracy === prevItem.accuracy) {
+                // Same accuracy = same rank
+                item.originalRank = prevItem.originalRank;
+            } else {
+                // Different accuracy = rank is position + 1
+                item.originalRank = idx + 1;
+            }
+        }
     });
 
     // Then sort by current sort field
