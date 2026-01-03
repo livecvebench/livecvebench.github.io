@@ -423,7 +423,16 @@ function renderLeaderboard() {
     filteredData.sort((a, b) => {
         const aVal = getSortValue(a, currentSort.field);
         const bVal = getSortValue(b, currentSort.field);
-        return compareValues(aVal, bVal, currentSort.direction);
+        const result = compareValues(aVal, bVal, currentSort.direction);
+
+        // If sorting by accuracy and values are equal, use success tokens as tie-breaker
+        if (result === 0 && currentSort.field === 'accuracy') {
+            const aTokens = a.success.tokens || Infinity;
+            const bTokens = b.success.tokens || Infinity;
+            return aTokens - bTokens;  // Lower tokens is better
+        }
+
+        return result;
     });
 
     // Generate HTML
