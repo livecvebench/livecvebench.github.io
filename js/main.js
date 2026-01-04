@@ -545,23 +545,34 @@ function initTimeline() {
     // 2025 only timeline
     const minDate = new Date('2025-01-01');
     const maxDate = new Date('2025-12-31');
-    const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24)); // 364
 
-    // Generate tick marks for 2025 months
+    // Generate tick marks for 2025 months (1/1 to 12/1) and 12/31
+    // Note: Browser slider thumb position = thumbWidth/2 + (value/max) * (trackWidth - thumbWidth)
+    // To align ticks with thumb center, we use: calc(10px + percent * (100% - 20px))
+    // where 10px = half thumb width, 20px = full thumb width
     function generateTicks() {
         let html = '';
+        // Add ticks for the 1st of each month (1/1 to 12/1)
         for (let month = 0; month < 12; month++) {
-            const position = (month / 11) * 100;
-            html += `<span class="timeline-tick" style="left: ${position}%">${month + 1}/1</span>`;
+            const tickDate = new Date(2025, month, 1);
+            const daysSinceStart = Math.floor((tickDate - minDate) / (1000 * 60 * 60 * 24));
+            const percent = daysSinceStart / totalDays;
+            // Use calc to match browser's slider thumb position
+            const position = `calc(10px + ${percent * 100}% - ${percent * 20}px)`;
+            html += `<span class="timeline-tick" style="left: ${position}">${month + 1}/1</span>`;
         }
+        // Add tick for 12/31 at the end (percent = 1)
+        const endPosition = `calc(10px + 100% - 20px)`;
+        html += `<span class="timeline-tick" style="left: ${endPosition}">12/31</span>`;
         timelineTicks.innerHTML = html;
     }
 
     generateTicks();
 
-    // Convert slider value (0-100) to date
+    // Convert slider value (0-364) to date
     function valueToDate(value) {
-        const days = Math.floor((value / 100) * totalDays);
+        const days = Math.floor(value);
         const date = new Date(minDate.getTime() + days * 24 * 60 * 60 * 1000);
         return date;
     }
@@ -579,9 +590,12 @@ function initTimeline() {
         const minVal = parseInt(rangeMin.value);
         const maxVal = parseInt(rangeMax.value);
 
-        // Calculate percentage positions
-        rangeSelected.style.left = minVal + '%';
-        rangeSelected.style.width = (maxVal - minVal) + '%';
+        // Calculate percentage positions (0-364 -> 0-100%)
+        const minPercent = (minVal / totalDays) * 100;
+        const maxPercent = (maxVal / totalDays) * 100;
+
+        rangeSelected.style.left = minPercent + '%';
+        rangeSelected.style.width = (maxPercent - minPercent) + '%';
 
         // Update date labels position and text
         const startDate = valueToDate(minVal);
@@ -591,9 +605,9 @@ function initTimeline() {
         dateEndEl.textContent = formatDate(endDate);
 
         // Position labels above the slider thumbs
-        dateStartEl.style.left = minVal + '%';
+        dateStartEl.style.left = minPercent + '%';
         dateStartEl.style.transform = 'translateX(-50%)';
-        dateEndEl.style.left = maxVal + '%';
+        dateEndEl.style.left = maxPercent + '%';
         dateEndEl.style.right = 'auto';
         dateEndEl.style.transform = 'translateX(-50%)';
 
@@ -624,9 +638,9 @@ function initTimeline() {
                 // Show slider for 2025
                 dateRangeSlider.style.display = 'block';
 
-                // Set slider to full 2025 range
+                // Set slider to full 2025 range (0-364 days)
                 rangeMin.value = 0;
-                rangeMax.value = 100;
+                rangeMax.value = totalDays;
 
                 updateRangeSlider();
             } else {
