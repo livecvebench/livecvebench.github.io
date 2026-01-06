@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "WebSearch",
+      "WebFetch(domain:www.tbench.ai)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}
