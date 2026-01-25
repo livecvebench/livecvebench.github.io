@@ -70,22 +70,22 @@
  & Claude Sonnet 4.5 & 21.30 & 15.6 & 446,801 & 16.3 & 563,390 \\
 \midrule
 \multirow{9}{*}{OpenHands}
- & Claude Opus 4.5 & 25.44 & 26.2 & 961,580 & 15.9 & 554,812 \\
- & Claude Sonnet 4.5 & 24.26 & 42.0 & 1,058,638 & 22.8 & 676,833 \\
- & Claude Sonnet 4 & 6.51 & 17.8 & 661,220 & 9.4 & 260,519 \\
- & Gemini 3 Pro & 8.88 & 80.9 & 3,525,777 & 16.8 & 662,785 \\
- & GPT-5.1-Codex & 15.38 & 48.9 & 2,070,957 & 15.2 & 677,249 \\
- & GLM-4.6 & 18.93 & 54.6 & 1,719,454 & 23.4 & 806,273 \\
+ & Claude Opus 4.5 & 25.44 & 13.1 & 480,790 & 8.0 & 277,406 \\
+ & Claude Sonnet 4.5 & 24.26 & 21.1 & 529,319 & 11.4 & 338,417 \\
+ & Claude Sonnet 4 & 6.51 & 8.9 & 330,610 & \textbf{4.7}{\color{bestgreen}$\blacktriangle$} & 130,260 \\
+ & Gemini 3 Pro & 8.88 & 40.5 & 1,762,888 & 8.4 & 331,392 \\
+ & GPT-5.1-Codex & 15.38 & 24.3 & 1,035,479 & 7.6 & 338,625 \\
+ & GLM-4.6 & 18.93 & 27.4 & 859,727 & 11.7 & 403,136 \\
  & Qwen 3 Coder 480B & 0.59 & -- & -- & -- & -- \\
- & DeepSeek V3.2 & 0.59 & -- & -- & 25.1 & 773,127 \\
- & DeepSeek V3.1-Terminus & 18.34 & 36.4 & 834,435 & 21.0 & 549,653 \\
+ & DeepSeek V3.2 & 0.59 & -- & -- & 12.6 & 386,564 \\
+ & DeepSeek V3.1-Terminus & 18.34 & 18.3 & 417,217 & 10.5 & 274,827 \\
 \midrule
 \multirow{10}{*}{Mini-SWE-Agent}
  & Claude Opus 4.5 & 34.32 & 20.4 & 351,880 & 14.2 & 327,411 \\
  & Claude Sonnet 4.5 & 28.99 & 24.0 & 360,323 & 11.8 & 197,597 \\
  & Claude Sonnet 4 & 7.69 & -- & -- & -- & -- \\
  & Gemini 3 Pro & 28.40 & 20.5 & 297,177 & 11.9 & 229,755 \\
- & GPT-5.1-Codex & 17.75 & \textbf{9.7}{\color{bestgreen}$\blacktriangle$} & \textbf{82,372}{\color{bestgreen}$\blacktriangle$} & \textbf{4.6}{\color{bestgreen}$\blacktriangle$} & \textbf{43,960}{\color{bestgreen}$\blacktriangle$} \\
+ & GPT-5.1-Codex & 17.75 & \textbf{9.7}{\color{bestgreen}$\blacktriangle$} & \textbf{82,372}{\color{bestgreen}$\blacktriangle$} & 4.6 & \textbf{43,960}{\color{bestgreen}$\blacktriangle$} \\
  & GLM-4.6 & 19.53 & 14.0 & 130,034 & 8.8 & 123,462 \\
  & MiniMax M2 & 19.53 & 18.7 & 218,971 & 18.5 & 337,194 \\
  & Qwen 3 Coder 480B & 19.53 & 17.5 & 171,833 & 15.3 & 203,605 \\
@@ -124,19 +124,19 @@
 \textbf{Agent} & \textbf{Model} & \textbf{Pass (\%)} & \textbf{Turns} & \textbf{Tokens} & \textbf{Turns} & \textbf{Tokens} \\
 \midrule
 \multirow{2}{*}{Claude Code}
- & Claude Opus 4.5 & 37.27 & 9.4 & 255,250 & \textbf{7.7}{\color{bestgreen}$\blacktriangle$} & 255,557 \\
+ & Claude Opus 4.5 & 37.27 & 9.4 & 255,250 & 7.7 & 255,557 \\
  & Claude Sonnet 4.5 & 25.45 & 13.5 & 379,983 & 11.2 & 336,144 \\
 \midrule
 \multirow{9}{*}{OpenHands}
- & Claude Opus 4.5 & 29.09 & 35.2 & 1,292,123 & 25.7 & 896,235 \\
- & Claude Sonnet 4.5 & 29.09 & 53.8 & 1,356,379 & 37.3 & 1,110,700 \\
- & Claude Sonnet 4 & 5.45 & 32.7 & 1,212,237 & 14.3 & 395,789 \\
- & Gemini 3 Pro & 13.64 & 80.9 & 3,525,777 & 27.0 & 1,073,116 \\
- & GPT-5.1-Codex & 20.00 & 57.2 & 2,440,199 & 20.2 & 896,428 \\
- & GLM-4.6 & 25.45 & 55.5 & 1,705,461 & 33.2 & 1,091,228 \\
+ & Claude Opus 4.5 & 29.09 & 17.6 & 646,062 & 12.9 & 448,117 \\
+ & Claude Sonnet 4.5 & 29.09 & 27.0 & 678,190 & 18.7 & 555,350 \\
+ & Claude Sonnet 4 & 5.45 & 16.3 & 606,118 & \textbf{7.1}{\color{bestgreen}$\blacktriangle$} & 197,894 \\
+ & Gemini 3 Pro & 13.64 & 40.5 & 1,762,888 & 13.5 & 536,558 \\
+ & GPT-5.1-Codex & 20.00 & 28.5 & 1,220,100 & 10.1 & 448,214 \\
+ & GLM-4.6 & 25.45 & 27.9 & 852,730 & 16.6 & 545,614 \\
  & Qwen 3 Coder 480B & 0.91 & -- & -- & -- & -- \\
  & DeepSeek V3.2 & 0.91 & -- & -- & -- & -- \\
- & DeepSeek V3.1-Terminus & 22.73 & 45.2 & 1,034,699 & 34.1 & 892,378 \\
+ & DeepSeek V3.1-Terminus & 22.73 & 22.6 & 517,349 & 17.1 & 446,189 \\
 \midrule
 \multirow{10}{*}{Mini-SWE-Agent}
  & Claude Opus 4.5 & 41.82 & 25.7 & 443,674 & 24.6 & 567,854 \\
