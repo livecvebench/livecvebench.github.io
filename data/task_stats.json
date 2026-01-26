@@ -844,6 +844,11 @@
       "success": false,
       "turns": 33,
       "tokens": 318846
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 32,
+      "tokens": 457916
     }
   },
   "mini-swe-agent+Claude-4-Sonnet": {
@@ -1691,6 +1696,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 37,
+      "tokens": 485657
     }
   },
   "mini-swe-agent+Claude-4.5-Sonnet": {
@@ -2538,6 +2548,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 23,
+      "tokens": 271005
     }
   },
   "mini-swe-agent+MiniMax-M2": {
@@ -3385,6 +3400,11 @@
       "success": false,
       "turns": 64,
       "tokens": 1057767
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 64,
+      "tokens": 901903
     }
   },
   "mini-swe-agent+DeepSeek-V3.1-Terminus": {
@@ -4229,6 +4249,11 @@
       "tokens": 0
     },
     "CVE-2025-55298": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -5079,6 +5104,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
     }
   },
   "mini-swe-agent+Gemini-3-Pro": {
@@ -5926,6 +5956,11 @@
       "success": false,
       "turns": 35,
       "tokens": 794761
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 18,
+      "tokens": 273467
     }
   },
   "mini-swe-agent+GPT-5.1-Codex": {
@@ -6773,6 +6808,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 21,
+      "tokens": 0
     }
   },
   "mini-swe-agent+Qwen3-Coder": {
@@ -7617,6 +7657,11 @@
       "tokens": 0
     },
     "CVE-2025-5151": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -8467,6 +8512,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 38,
+      "tokens": 415884
     }
   },
   "openhands+Claude-4.5-Opus": {
@@ -9314,6 +9364,11 @@
       "success": false,
       "turns": 35,
       "tokens": 1550336
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 37,
+      "tokens": 944082
     }
   },
   "openhands+Claude-4-Sonnet": {
@@ -10158,6 +10213,11 @@
       "tokens": 0
     },
     "CVE-2025-14953": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -11008,6 +11068,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 61,
+      "tokens": 1834318
     }
   },
   "openhands+DeepSeek-V3.1-Terminus": {
@@ -11852,6 +11917,11 @@
       "tokens": 1433357
     },
     "CVE-2025-5151": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -12702,6 +12772,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
     }
   },
   "openhands+Gemini-3-Pro": {
@@ -13549,6 +13624,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 43,
+      "tokens": 1286768
     }
   },
   "openhands+GPT-5.1-Codex": {
@@ -14396,6 +14476,11 @@
       "success": false,
       "turns": 0,
       "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 111,
+      "tokens": 3542891
     }
   },
   "openhands+Qwen3-Coder": {
@@ -15240,6 +15325,11 @@
       "tokens": 0
     },
     "CVE-2025-54586": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -16090,6 +16180,11 @@
       "success": false,
       "turns": 56,
       "tokens": 1474781
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
     }
   },
   "terminus-2+Claude-4.5-Opus": {
@@ -16937,6 +17032,11 @@
       "success": false,
       "turns": 25,
       "tokens": 369301
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 26,
+      "tokens": 449047
     }
   },
   "terminus-2+Claude-4-Sonnet": {
@@ -17784,6 +17884,11 @@
       "success": false,
       "turns": 36,
       "tokens": 728488
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 31,
+      "tokens": 354863
     }
   },
   "terminus-2+Claude-4.5-Sonnet": {
@@ -18631,6 +18736,11 @@
       "success": false,
       "turns": 32,
       "tokens": 743690
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 21,
+      "tokens": 311684
     }
   },
   "terminus-2+MiniMax-M2": {
@@ -19478,6 +19588,11 @@
       "success": false,
       "turns": 62,
       "tokens": 785667
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 52,
+      "tokens": 811774
     }
   },
   "terminus-2+DeepSeek-V3.1-Terminus": {
@@ -20325,6 +20440,11 @@
       "success": false,
       "turns": 22,
       "tokens": 312630
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 14,
+      "tokens": 142274
     }
   },
   "terminus-2+DeepSeek-V3.2": {
@@ -21172,6 +21292,11 @@
       "success": true,
       "turns": 15,
       "tokens": 238040
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 18,
+      "tokens": 319999
     }
   },
   "terminus-2+Gemini-3-Pro": {
@@ -22019,6 +22144,11 @@
       "success": false,
       "turns": 13,
       "tokens": 158614
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 13,
+      "tokens": 77943
     }
   },
   "terminus-2+GPT-5.1-Codex": {
@@ -22866,6 +22996,11 @@
       "success": false,
       "turns": 6,
       "tokens": 32056
+    },
+    "CVE-2025-10162": {
+      "success": true,
+      "turns": 15,
+      "tokens": 120073
     }
   },
   "terminus-2+Qwen3-Coder": {
@@ -23713,6 +23848,11 @@
       "success": false,
       "turns": 75,
       "tokens": 2143860
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 116,
+      "tokens": 2293266
     }
   },
   "terminus-2+GLM-4.6": {
@@ -24560,6 +24700,11 @@
       "success": false,
       "turns": 40,
       "tokens": 877175
+    },
+    "CVE-2025-10162": {
+      "success": false,
+      "turns": 22,
+      "tokens": 225973
     }
   },
   "claude-code+Claude-4.5-Opus": {
@@ -25924,6 +26069,11 @@
       "tokens": 0
     },
     "CVE-2025-53367": {
+      "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
       "success": false,
       "turns": 0,
       "tokens": 0
@@ -27292,6 +27442,11 @@
     },
     "CVE-2025-53528": {
       "success": false,
+      "turns": 0,
+      "tokens": 0
+    },
+    "CVE-2025-10162": {
+      "success": true,
       "turns": 0,
       "tokens": 0
     }
