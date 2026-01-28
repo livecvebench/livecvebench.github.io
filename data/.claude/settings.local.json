@@ -4,7 +4,8 @@
       "Bash(python:*)",
       "WebSearch",
       "WebFetch(domain:www.tbench.ai)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(del:*)"
     ]
   }
 }
