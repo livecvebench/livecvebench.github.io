@@ -1,6 +1,9 @@
 // LiveCVEBench Leaderboard JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme
+    initTheme();
+
     // Initialize navbar burger
     initNavbarBurger();
 
@@ -10,6 +13,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize sorting
     initSorting();
 });
+
+// Theme toggle functionality
+function initTheme() {
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
+    // Apply saved theme
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    }
+}
+
+function updateThemeIcon(theme) {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    }
+}
 
 // Navbar burger toggle for mobile
 function initNavbarBurger() {
@@ -68,6 +102,15 @@ async function loadLeaderboard() {
         document.getElementById('lastUpdated').textContent = data.metadata.lastUpdated;
         document.getElementById('totalCVEs').textContent = cveData.length;
 
+        // Update stats section
+        updateStats(data);
+
+        // Render top performers preview
+        renderTopPerformers();
+
+        // Render sample tasks
+        renderSampleTasks();
+
         // Initialize tabs
         initTabs();
 
@@ -92,6 +135,167 @@ async function loadLeaderboard() {
             </tr>
         `;
     }
+}
+
+// Update stats section with animated numbers
+function updateStats(data) {
+    const cveCount = allCveData.length;
+    const models = new Set();
+    const agents = new Set();
+
+    // Count unique models and agents across all instruction types
+    for (const type of ['cve_description', 'user_report']) {
+        const results = allResultsData[type] || [];
+        results.forEach(r => {
+            models.add(r.model);
+            agents.add(r.agent);
+        });
+    }
+
+    // Animate stats
+    animateNumber('statCVEs', cveCount);
+    animateNumber('statModels', models.size);
+    animateNumber('statAgents', agents.size);
+
+    // Update last updated
+    const statUpdated = document.getElementById('statUpdated');
+    if (statUpdated && data.metadata.lastUpdated) {
+        statUpdated.textContent = data.metadata.lastUpdated;
+    }
+}
+
+// Animate number counting up
+function animateNumber(elementId, target) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+
+    const duration = 1500;
+    const startTime = performance.now();
+    const startValue = 0;
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.floor(startValue + (target - startValue) * easeOut);
+
+        element.textContent = currentValue;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = target;
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+// Render top performers preview
+function renderTopPerformers() {
+    const container = document.getElementById('performersList');
+    if (!container) return;
+
+    // Get top 5 from current instruction type
+    const results = leaderboardData
+        .map(item => {
+            const cveResults = item.cve_results || {};
+            const tested = Object.keys(cveResults);
+            const success = tested.filter(id => cveResults[id]?.success).length;
+            return {
+                ...item,
+                accuracy: tested.length > 0 ? success / tested.length : 0,
+                tested: tested.length
+            };
+        })
+        .filter(item => item.tested > 0)
+        .sort((a, b) => b.accuracy - a.accuracy)
+        .slice(0, 5);
+
+    if (results.length === 0) {
+        container.innerHTML = '<div class="performer-loading">No data available</div>';
+        return;
+    }
+
+    const html = results.map((item, index) => {
+        const rank = index + 1;
+        const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-default';
+        const accuracyPercent = (item.accuracy * 100).toFixed(1);
+        const scoreClass = item.accuracy >= 0.7 ? 'score-high' : item.accuracy >= 0.4 ? 'score-medium' : 'score-low';
+
+        return `
+            <div class="performer-item">
+                <div class="performer-rank ${rankClass}">${rank}</div>
+                <div class="performer-info" data-accuracy="${accuracyPercent}%">
+                    <div class="performer-model">${item.model}</div>
+                    <div class="performer-agent">
+                        <i class="fas fa-robot"></i> ${item.agent}
+                    </div>
+                </div>
+                <div class="performer-accuracy ${scoreClass}">${accuracyPercent}%</div>
+                <div class="performer-bar-container">
+                    <div class="performer-bar" style="width: ${accuracyPercent}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = html;
+}
+
+// Render sample CVE tasks
+function renderSampleTasks() {
+    const container = document.getElementById('tasksGrid');
+    if (!container) return;
+
+    // Get random sample of CVEs (up to 6)
+    const sampleCves = [...allCveData]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 6);
+
+    if (sampleCves.length === 0) {
+        container.innerHTML = '<div class="task-loading">No CVE data available</div>';
+        return;
+    }
+
+    const severityMap = {
+        'critical': 'critical',
+        'high': 'high',
+        'medium': 'medium',
+        'low': 'low'
+    };
+
+    const html = sampleCves.map(cve => {
+        const severity = (cve.severity || 'medium').toLowerCase();
+        const severityClass = severityMap[severity] || 'medium';
+        const language = cve.language || 'Unknown';
+        const category = cve.category || 'Vulnerability';
+
+        return `
+            <div class="task-card">
+                <div class="task-header">
+                    <span class="task-cve-id">${cve.id}</span>
+                    <span class="task-severity ${severityClass}">${severity}</span>
+                </div>
+                <div class="task-title">${cve.title || cve.id}</div>
+                <div class="task-meta">
+                    <span class="task-tag">
+                        <i class="fas fa-code"></i> ${language}
+                    </span>
+                    <span class="task-tag">
+                        <i class="fas fa-tag"></i> ${category}
+                    </span>
+                </div>
+                <div class="task-date">
+                    <i class="fas fa-calendar"></i> ${cve.date || 'Unknown date'}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = html;
 }
 
 // Initialize instruction type tabs

@@ -51,31 +51,131 @@
                         <span class="icon"><i class="fas fa-file-alt"></i></span>
                         <span>Paper</span>
                     </a>
+                    <div class="navbar-item">
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-medium hero-gradient">
+    <section class="hero is-fullheight hero-gradient">
         <div class="hero-body">
             <div class="container has-text-centered">
-                <p class="author-affiliations">Kuaishou Klear Team × HIT-SCIR-LACG</p>
+                <p class="author-affiliations">
+                    <span class="collab-badge">Kuaishou Klear Team</span>
+                    <span class="collab-separator">×</span>
+                    <span class="collab-badge">HIT-SCIR-LACG</span>
+                </p>
                 <h1 class="title is-1 main-title">
+                    <span class="title-icon"><i class="fas fa-shield-virus"></i></span>
                     LiveCVEBench
                 </h1>
+                <p class="main-tagline">Contamination-Free Agentic Benchmark</p>
                 <h2 class="subtitle is-4 main-subtitle">
-                    A Contamination-Free Agentic Benchmark for Evaluating Code Agents on Real-World CVE Vulnerability Fixing
+                    Evaluating Code Agents on Real-World CVE Vulnerability Fixing
                 </h2>
                 <div class="buttons is-centered mt-5">
-                    <a class="button is-primary is-medium" href="#leaderboard">
+                    <a class="button is-primary is-medium hero-btn" href="#leaderboard">
                         <span class="icon"><i class="fas fa-trophy"></i></span>
                         <span>View Leaderboard</span>
                     </a>
-                    <a class="button is-light is-medium" href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
+                    <a class="button is-light is-medium hero-btn" href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
                         <span class="icon"><i class="fab fa-github"></i></span>
                         <span>GitHub</span>
                     </a>
+                    <a class="button is-info is-medium hero-btn" href="#" target="_blank">
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span>Paper</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-foot has-text-centered">
+            <a href="#stats" class="scroll-indicator">
+                <span class="scroll-text">Scroll to explore</span>
+                <span class="scroll-arrow"><i class="fas fa-chevron-down"></i></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Overview Section -->
+    <section class="section stats-section" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-bug"></i></div>
+                    <div class="stat-number" data-target="0" id="statCVEs">0</div>
+                    <div class="stat-label">CVE Tasks</div>
+                    <div class="stat-desc">Real-world vulnerabilities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                    <div class="stat-number" data-target="0" id="statModels">0</div>
+                    <div class="stat-label">LLM Models</div>
+                    <div class="stat-desc">Tested & evaluated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-robot"></i></div>
+                    <div class="stat-number" data-target="0" id="statAgents">0</div>
+                    <div class="stat-label">Code Agents</div>
+                    <div class="stat-desc">Autonomous systems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-number" id="statUpdated">-</div>
+                    <div class="stat-label">Last Updated</div>
+                    <div class="stat-desc">Continuously evolving</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Performers Preview Section -->
+    <section class="section top-performers-section" id="top-performers">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-trophy"></i></span>
+                    Top Performers
+                </h2>
+                <p class="section-desc">Leading code agents on CVE vulnerability fixing</p>
+
+                <div class="performers-list" id="performersList">
+                    <!-- Will be populated by JavaScript -->
+                    <div class="performer-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading leaderboard data...
+                    </div>
+                </div>
+
+                <div class="has-text-centered mt-5">
+                    <a class="button is-primary is-medium" href="#leaderboard">
+                        <span class="icon"><i class="fas fa-list"></i></span>
+                        <span>View Full Leaderboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Tasks Section -->
+    <section class="section sample-tasks-section" id="sample-tasks">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-tasks"></i></span>
+                    Sample CVE Tasks
+                </h2>
+                <p class="section-desc">Real-world vulnerability fixing challenges from the benchmark</p>
+
+                <div class="tasks-grid" id="tasksGrid">
+                    <!-- Will be populated by JavaScript -->
+                    <div class="task-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading sample tasks...
+                    </div>
                 </div>
             </div>
         </div>
@@ -364,6 +464,6 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=7"></script>
+    <script src="js/main.js?v=8"></script>
 </body>
 </html>
