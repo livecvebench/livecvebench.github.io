@@ -62,7 +62,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-fullheight hero-gradient">
+    <section class="hero is-medium hero-gradient">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <p class="author-affiliations">
@@ -78,46 +78,27 @@
                 <h2 class="subtitle is-4 main-subtitle">
                     Evaluating Code Agents on Real-World CVE Vulnerability Fixing
                 </h2>
-                <div class="buttons is-centered mt-5">
-                    <a class="button is-primary is-medium hero-btn" href="#leaderboard">
-                        <span class="icon"><i class="fas fa-trophy"></i></span>
-                        <span>View Leaderboard</span>
-                    </a>
-                    <a class="button is-light is-medium hero-btn" href="https://github.com/livecvebench/CVE-Factory" target="_blank">
-                        <span class="icon"><i class="fab fa-github"></i></span>
-                        <span>GitHub</span>
-                    </a>
-                    <a class="button is-info is-medium hero-btn" href="https://arxiv.org/abs/2602.03012" target="_blank">
-                        <span class="icon"><i class="fas fa-file-alt"></i></span>
-                        <span>Paper</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="hero-foot has-text-centered">
-            <a href="#stats" class="scroll-indicator">
-                <span class="scroll-text">Scroll to explore</span>
-                <span class="scroll-arrow"><i class="fas fa-chevron-down"></i></span>
-            </a>
-        </div>
-    </section>
 
-    <!-- CVE-Factory Introduction Section -->
-    <section class="section cve-factory-section" id="stats">
-        <div class="container">
-            <div class="cve-factory-content">
-                <h2 class="title is-3 cve-factory-title">
-                    <span class="icon"><i class="fas fa-cogs"></i></span>
-                    CVE-Factory
-                </h2>
-                <p class="cve-factory-desc">
-                    <strong>CVE-Factory</strong> is a Multi-Agent system for fully automated, end-to-end CVE reproduction.
-                    Given CVE records, the system automatically researches details, generates test cases, builds Docker environments,
-                    and validates that each vulnerability can be both exploited and patched. The pipeline transforms CVE metadata
-                    into reproducible, testable vulnerability environments without manual intervention.
-                </p>
-                <div class="pipeline-image-container">
-                    <img src="images/pipeline.png" alt="CVE-Factory Pipeline" class="pipeline-image">
+                <!-- Badges -->
+                <div class="badges-container mt-4">
+                    <a href="https://arxiv.org/abs/2602.03012" target="_blank">
+                        <img src="https://img.shields.io/badge/Paper-PDF-red.svg" alt="Paper">
+                    </a>
+                    <a href="https://livecvebench.github.io/" target="_blank">
+                        <img src="https://img.shields.io/badge/🏆-Leaderboard-gold.svg" alt="Leaderboard">
+                    </a>
+                    <a href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
+                        <img src="https://img.shields.io/badge/LiveCVEBench-Benchmark-orange.svg" alt="Benchmark">
+                    </a>
+                    <a href="https://huggingface.co/Luoberta/Abacus-cve" target="_blank">
+                        <img src="https://img.shields.io/badge/🤗%20Model-Abacus--cve-blue.svg" alt="Model">
+                    </a>
+                    <a href="https://huggingface.co/datasets/Luoberta/cve_train" target="_blank">
+                        <img src="https://img.shields.io/badge/🤗%20Dataset-cve__train-yellow.svg" alt="Dataset">
+                    </a>
+                    <a href="https://opensource.org/licenses/MIT" target="_blank">
+                        <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+                    </a>
                 </div>
             </div>
         </div>
@@ -145,6 +126,27 @@
                         <span class="icon"><i class="fas fa-list"></i></span>
                         <span>View Full Leaderboard</span>
                     </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CVE-Factory Introduction Section -->
+    <section class="section cve-factory-section" id="stats">
+        <div class="container">
+            <div class="cve-factory-content">
+                <h2 class="title is-3 cve-factory-title">
+                    <span class="icon"><i class="fas fa-cogs"></i></span>
+                    CVE-Factory
+                </h2>
+                <p class="cve-factory-desc">
+                    <strong>CVE-Factory</strong> is a Multi-Agent system for fully automated, end-to-end CVE reproduction.
+                    Given CVE records, the system automatically researches details, generates test cases, builds Docker environments,
+                    and validates that each vulnerability can be both exploited and patched. The pipeline transforms CVE metadata
+                    into reproducible, testable vulnerability environments without manual intervention.
+                </p>
+                <div class="pipeline-image-container">
+                    <img src="images/pipeline.png" alt="CVE-Factory Pipeline" class="pipeline-image">
                 </div>
             </div>
         </div>

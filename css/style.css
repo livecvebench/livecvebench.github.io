@@ -225,6 +225,27 @@ body {
     line-height: 1.6;
 }
 
+/* Badges Container */
+.badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.badges-container a {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.badges-container a:hover {
+    transform: translateY(-2px);
+}
+
+.badges-container img {
+    height: 22px;
+}
+
 .hero-btn {
     border-radius: 9999px;
     padding: 1.25rem 2rem;
