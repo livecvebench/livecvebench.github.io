@@ -29766,12 +29766,12 @@
           "tokens": 1455961
         },
         "CVE-2025-55741": {
-          "success": null,
-          "turns": 0,
-          "tokens": 0
+          "success": true,
+          "turns": 73,
+          "tokens": 1404366
         }
       }
     }
   ],
-  "updated_at": "2026-02-05T12:11:10.335799"
+  "updated_at": "2026-02-05T14:46:16.822909"
 }
