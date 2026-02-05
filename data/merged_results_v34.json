@@ -28815,10 +28815,10 @@
     {
       "model": "Abacus-CVE",
       "agent": "Mini-SWE-Agent",
-      "modelType": "closed",
+      "modelType": "open",
       "agentType": "open",
       "dataset": "patcheval-des-all",
-      "instruction_type": "cve_description",
+      "instruction_type": "user_report",
       "cve_results": {
         "CVE-2025-24359": {
           "success": false,
@@ -29773,5 +29773,5 @@
       }
     }
   ],
-  "updated_at": "2026-02-05T12:04:35.874599"
+  "updated_at": "2026-02-05T12:11:10.335799"
 }
