@@ -62,70 +62,66 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-medium hero-gradient">
+    <section class="hero hero-gradient">
         <div class="hero-body">
-            <div class="container has-text-centered">
-                <p class="author-affiliations">
-                    <span class="collab-badge">Kuaishou Klear Team</span>
-                    <span class="collab-separator">×</span>
-                    <span class="collab-badge">HIT-SCIR-LACG</span>
-                </p>
-                <h1 class="title is-1 main-title">
-                    <span class="title-icon"><i class="fas fa-shield-virus"></i></span>
-                    LiveCVEBench
-                </h1>
-                <p class="main-tagline">Contamination-Free Agentic Benchmark</p>
-                <h2 class="subtitle is-4 main-subtitle">
-                    Evaluating Code Agents on Real-World CVE Vulnerability Fixing
-                </h2>
+            <div class="container">
+                <div class="hero-content-wrapper">
+                    <!-- Left: Title and Info -->
+                    <div class="hero-left has-text-centered">
+                        <p class="author-affiliations">
+                            <span class="collab-badge">Kuaishou Klear Team</span>
+                            <span class="collab-separator">×</span>
+                            <span class="collab-badge">HIT-SCIR-LACG</span>
+                        </p>
+                        <h1 class="title is-1 main-title">
+                            <span class="title-icon"><i class="fas fa-shield-virus"></i></span>
+                            LiveCVEBench
+                        </h1>
+                        <p class="main-tagline">Contamination-Free Agentic Benchmark</p>
+                        <h2 class="subtitle is-4 main-subtitle">
+                            Evaluating Code Agents on Real-World CVE Vulnerability Fixing
+                        </h2>
 
-                <!-- Badges -->
-                <div class="badges-container mt-4">
-                    <a href="https://arxiv.org/abs/2602.03012" target="_blank">
-                        <img src="https://img.shields.io/badge/Paper-PDF-red.svg" alt="Paper">
-                    </a>
-                    <a href="https://livecvebench.github.io/" target="_blank">
-                        <img src="https://img.shields.io/badge/🏆-Leaderboard-gold.svg" alt="Leaderboard">
-                    </a>
-                    <a href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
-                        <img src="https://img.shields.io/badge/LiveCVEBench-Benchmark-orange.svg" alt="Benchmark">
-                    </a>
-                    <a href="https://huggingface.co/Luoberta/Abacus-cve" target="_blank">
-                        <img src="https://img.shields.io/badge/🤗%20Model-Abacus--cve-blue.svg" alt="Model">
-                    </a>
-                    <a href="https://huggingface.co/datasets/Luoberta/cve_train" target="_blank">
-                        <img src="https://img.shields.io/badge/🤗%20Dataset-cve__train-yellow.svg" alt="Dataset">
-                    </a>
-                    <a href="https://opensource.org/licenses/MIT" target="_blank">
-                        <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Top Performers Preview Section -->
-    <section class="section top-performers-section" id="top-performers">
-        <div class="container">
-            <div class="content-box">
-                <h2 class="title is-3 section-title">
-                    <span class="icon"><i class="fas fa-trophy"></i></span>
-                    Top Performers
-                </h2>
-                <p class="section-desc">Leading code agents on CVE vulnerability fixing</p>
-
-                <div class="performers-list" id="performersList">
-                    <!-- Will be populated by JavaScript -->
-                    <div class="performer-loading">
-                        <i class="fas fa-spinner fa-spin"></i> Loading leaderboard data...
+                        <!-- Badges -->
+                        <div class="badges-container mt-4">
+                            <a href="https://arxiv.org/abs/2602.03012" target="_blank">
+                                <img src="https://img.shields.io/badge/Paper-PDF-red.svg" alt="Paper">
+                            </a>
+                            <a href="https://livecvebench.github.io/" target="_blank">
+                                <img src="https://img.shields.io/badge/🏆-Leaderboard-gold.svg" alt="Leaderboard">
+                            </a>
+                            <a href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
+                                <img src="https://img.shields.io/badge/LiveCVEBench-Benchmark-orange.svg" alt="Benchmark">
+                            </a>
+                            <a href="https://huggingface.co/Luoberta/Abacus-cve" target="_blank">
+                                <img src="https://img.shields.io/badge/🤗%20Model-Abacus--cve-blue.svg" alt="Model">
+                            </a>
+                            <a href="https://huggingface.co/datasets/Luoberta/cve_train" target="_blank">
+                                <img src="https://img.shields.io/badge/🤗%20Dataset-cve__train-yellow.svg" alt="Dataset">
+                            </a>
+                            <a href="https://opensource.org/licenses/MIT" target="_blank">
+                                <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="has-text-centered mt-5">
-                    <a class="button is-primary is-medium" href="#leaderboard">
-                        <span class="icon"><i class="fas fa-list"></i></span>
-                        <span>View Full Leaderboard</span>
-                    </a>
+                    <!-- Right: Top Performers Card -->
+                    <div class="hero-right">
+                        <div class="top-performers-card">
+                            <h3 class="performers-card-title">
+                                <span class="icon"><i class="fas fa-trophy"></i></span>
+                                Top Performers
+                            </h3>
+                            <div class="performers-list-compact" id="performersList">
+                                <div class="performer-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                            <a class="view-full-btn" href="#leaderboard">
+                                View Full Leaderboard →
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

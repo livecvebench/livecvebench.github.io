@@ -110,7 +110,7 @@ body {
 .hero-gradient {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 40%, #3b82f6 70%, #06b6d4 100%);
     position: relative;
-    min-height: 100vh;
+    padding: 2rem 0;
 }
 
 .hero-gradient::before {
@@ -150,13 +150,138 @@ body {
 .hero-body {
     position: relative;
     z-index: 1;
+    padding: 3rem 1.5rem;
+}
+
+/* Hero Content Wrapper - Two Column Layout */
+.hero-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.hero-right {
+    flex: 0 0 380px;
+}
+
+@media screen and (max-width: 992px) {
+    .hero-content-wrapper {
+        flex-direction: column;
+    }
+
+    .hero-right {
+        flex: none;
+        width: 100%;
+        max-width: 450px;
+    }
+}
+
+/* Top Performers Card in Hero */
+.top-performers-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.performers-card-title {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.performers-card-title .icon {
+    color: #fbbf24;
+}
+
+.performers-list-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.performers-list-compact .performer-loading {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 1rem;
+}
+
+.performers-list-compact .performer-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.performers-list-compact .performer-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.performers-list-compact .performer-rank {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
 }
 
-.hero.is-fullheight .hero-body {
-    padding-bottom: 80px;
+.performers-list-compact .performer-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.performers-list-compact .performer-model {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.performers-list-compact .performer-agent {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+}
+
+.performers-list-compact .performer-accuracy {
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.view-full-btn {
+    display: block;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.view-full-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .author-affiliations {
@@ -220,9 +345,9 @@ body {
     color: rgba(255, 255, 255, 0.85);
     font-weight: 400;
     font-size: 1.4rem;
-    max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
+    white-space: nowrap;
 }
 
 /* Badges Container */

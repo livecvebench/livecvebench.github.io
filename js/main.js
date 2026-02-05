@@ -228,16 +228,11 @@ function renderTopPerformers() {
         return `
             <div class="performer-item">
                 <div class="performer-rank ${rankClass}">${rank}</div>
-                <div class="performer-info" data-accuracy="${accuracyPercent}%">
+                <div class="performer-info">
                     <div class="performer-model">${item.model}</div>
-                    <div class="performer-agent">
-                        <i class="fas fa-robot"></i> ${item.agent}
-                    </div>
+                    <div class="performer-agent">${item.agent}</div>
                 </div>
                 <div class="performer-accuracy ${scoreClass}">${accuracyPercent}%</div>
-                <div class="performer-bar-container">
-                    <div class="performer-bar" style="width: ${accuracyPercent}%"></div>
-                </div>
             </div>
         `;
     }).join('');
