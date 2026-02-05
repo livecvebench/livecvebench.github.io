@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "lastUpdated": "2026-02-04",
+    "lastUpdated": "2026-02-05",
     "version": "1.0.0"
   },
   "cves": [
@@ -766,7 +766,966 @@
     }
   ],
   "results": {
-    "cve_description": [],
+    "cve_description": [
+      {
+        "model": "Abacus-CVE",
+        "agent": "Mini-SWE-Agent",
+        "modelType": "closed",
+        "agentType": "open",
+        "cve_results": {
+          "CVE-2025-24359": {
+            "success": false,
+            "turns": 101,
+            "tokens": 3591625
+          },
+          "CVE-2025-10824": {
+            "success": true,
+            "turns": 103,
+            "tokens": 2027012
+          },
+          "CVE-2025-14529": {
+            "success": true,
+            "turns": 30,
+            "tokens": 242224
+          },
+          "CVE-2025-32440": {
+            "success": false,
+            "turns": 63,
+            "tokens": 1109580
+          },
+          "CVE-2025-9670": {
+            "success": false,
+            "turns": 113,
+            "tokens": 3999047
+          },
+          "CVE-2025-68129": {
+            "success": false,
+            "turns": 72,
+            "tokens": 2796938
+          },
+          "CVE-2025-49844": {
+            "success": false,
+            "turns": 140,
+            "tokens": 5810957
+          },
+          "CVE-2025-59420": {
+            "success": true,
+            "turns": 40,
+            "tokens": 557626
+          },
+          "CVE-2025-53367": {
+            "success": false,
+            "turns": 52,
+            "tokens": 2180326
+          },
+          "CVE-2025-11661": {
+            "success": true,
+            "turns": 107,
+            "tokens": 3478832
+          },
+          "CVE-2025-21623": {
+            "success": true,
+            "turns": 85,
+            "tokens": 2422042
+          },
+          "CVE-2025-61687": {
+            "success": false,
+            "turns": 71,
+            "tokens": 1874294
+          },
+          "CVE-2025-65108": {
+            "success": true,
+            "turns": 84,
+            "tokens": 2715976
+          },
+          "CVE-2025-57764": {
+            "success": true,
+            "turns": 42,
+            "tokens": 397111
+          },
+          "CVE-2025-4318": {
+            "success": true,
+            "turns": 179,
+            "tokens": 6222996
+          },
+          "CVE-2025-11291": {
+            "success": true,
+            "turns": 12,
+            "tokens": 76619
+          },
+          "CVE-2025-12745": {
+            "success": true,
+            "turns": 34,
+            "tokens": 387376
+          },
+          "CVE-2025-13204": {
+            "success": false,
+            "turns": 53,
+            "tokens": 665892
+          },
+          "CVE-2025-55742": {
+            "success": false,
+            "turns": 116,
+            "tokens": 4176036
+          },
+          "CVE-2025-58761": {
+            "success": false,
+            "turns": 63,
+            "tokens": 1107502
+          },
+          "CVE-2025-13434": {
+            "success": false,
+            "turns": 30,
+            "tokens": 296518
+          },
+          "CVE-2025-54075": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-11421": {
+            "success": true,
+            "turns": 46,
+            "tokens": 689222
+          },
+          "CVE-2025-51495": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-64186": {
+            "success": true,
+            "turns": 39,
+            "tokens": 531140
+          },
+          "CVE-2025-46653": {
+            "success": false,
+            "turns": 29,
+            "tokens": 316820
+          },
+          "CVE-2025-11529": {
+            "success": true,
+            "turns": 33,
+            "tokens": 384960
+          },
+          "CVE-2025-6104": {
+            "success": true,
+            "turns": 13,
+            "tokens": 31914
+          },
+          "CVE-2025-5895": {
+            "success": false,
+            "turns": 46,
+            "tokens": 686940
+          },
+          "CVE-2025-66030": {
+            "success": false,
+            "turns": 78,
+            "tokens": 2482438
+          },
+          "CVE-2025-63589": {
+            "success": false,
+            "turns": 115,
+            "tokens": 3119248
+          },
+          "CVE-2025-66469": {
+            "success": true,
+            "turns": 21,
+            "tokens": 319602
+          },
+          "CVE-2025-65113": {
+            "success": false,
+            "turns": 50,
+            "tokens": 727155
+          },
+          "CVE-2025-54571": {
+            "success": null,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-54073": {
+            "success": false,
+            "turns": 158,
+            "tokens": 5915081
+          },
+          "CVE-2025-57762": {
+            "success": false,
+            "turns": 36,
+            "tokens": 285084
+          },
+          "CVE-2025-52576": {
+            "success": false,
+            "turns": 64,
+            "tokens": 1619189
+          },
+          "CVE-2025-55004": {
+            "success": false,
+            "turns": 96,
+            "tokens": 2281600
+          },
+          "CVE-2025-61783": {
+            "success": true,
+            "turns": 112,
+            "tokens": 4018210
+          },
+          "CVE-2025-55195": {
+            "success": false,
+            "turns": 28,
+            "tokens": 329350
+          },
+          "CVE-2025-9136": {
+            "success": true,
+            "turns": 19,
+            "tokens": 148377
+          },
+          "CVE-2025-66449": {
+            "success": false,
+            "turns": 25,
+            "tokens": 190824
+          },
+          "CVE-2025-62382": {
+            "success": false,
+            "turns": 23,
+            "tokens": 229861
+          },
+          "CVE-2025-5644": {
+            "success": false,
+            "turns": 26,
+            "tokens": 263627
+          },
+          "CVE-2025-26619": {
+            "success": true,
+            "turns": 87,
+            "tokens": 2442656
+          },
+          "CVE-2025-30158": {
+            "success": false,
+            "turns": 33,
+            "tokens": 584233
+          },
+          "CVE-2025-8085": {
+            "success": false,
+            "turns": 37,
+            "tokens": 532109
+          },
+          "CVE-2025-61605": {
+            "success": true,
+            "turns": 42,
+            "tokens": 568766
+          },
+          "CVE-2025-9796": {
+            "success": true,
+            "turns": 46,
+            "tokens": 865518
+          },
+          "CVE-2025-21622": {
+            "success": false,
+            "turns": 108,
+            "tokens": 2086338
+          },
+          "CVE-2025-54121": {
+            "success": true,
+            "turns": 38,
+            "tokens": 555537
+          },
+          "CVE-2025-48050": {
+            "success": true,
+            "turns": 43,
+            "tokens": 520290
+          },
+          "CVE-2025-9394": {
+            "success": false,
+            "turns": 85,
+            "tokens": 1928702
+          },
+          "CVE-2025-21624": {
+            "success": true,
+            "turns": 48,
+            "tokens": 652618
+          },
+          "CVE-2025-5499": {
+            "success": true,
+            "turns": 24,
+            "tokens": 324643
+          },
+          "CVE-2025-49141": {
+            "success": true,
+            "turns": 65,
+            "tokens": 1375156
+          },
+          "CVE-2025-6167": {
+            "success": false,
+            "turns": 73,
+            "tokens": 1999473
+          },
+          "CVE-2025-10162": {
+            "success": true,
+            "turns": 36,
+            "tokens": 499857
+          },
+          "CVE-2025-11554": {
+            "success": true,
+            "turns": 58,
+            "tokens": 1147252
+          },
+          "CVE-2025-52903": {
+            "success": false,
+            "turns": 32,
+            "tokens": 273057
+          },
+          "CVE-2025-49619": {
+            "success": false,
+            "turns": 50,
+            "tokens": 904580
+          },
+          "CVE-2025-5321": {
+            "success": false,
+            "turns": 82,
+            "tokens": 2700013
+          },
+          "CVE-2025-50201": {
+            "success": false,
+            "turns": 69,
+            "tokens": 1087855
+          },
+          "CVE-2025-59333": {
+            "success": false,
+            "turns": 17,
+            "tokens": 119688
+          },
+          "CVE-2025-53892": {
+            "success": false,
+            "turns": 93,
+            "tokens": 3172485
+          },
+          "CVE-2025-12758": {
+            "success": false,
+            "turns": 51,
+            "tokens": 1570284
+          },
+          "CVE-2025-5878": {
+            "success": false,
+            "turns": 58,
+            "tokens": 1141251
+          },
+          "CVE-2025-14587": {
+            "success": false,
+            "turns": 17,
+            "tokens": 148805
+          },
+          "CVE-2025-54381": {
+            "success": false,
+            "turns": 28,
+            "tokens": 401035
+          },
+          "CVE-2025-53528": {
+            "success": false,
+            "turns": 37,
+            "tokens": 426172
+          },
+          "CVE-2025-61665": {
+            "success": true,
+            "turns": 33,
+            "tokens": 436976
+          },
+          "CVE-2025-62416": {
+            "success": false,
+            "turns": 47,
+            "tokens": 675091
+          },
+          "CVE-2025-10357": {
+            "success": true,
+            "turns": 35,
+            "tokens": 795122
+          },
+          "CVE-2025-59426": {
+            "success": false,
+            "turns": 59,
+            "tokens": 1401963
+          },
+          "CVE-2025-3248": {
+            "success": false,
+            "turns": 45,
+            "tokens": 676042
+          },
+          "CVE-2025-27109": {
+            "success": true,
+            "turns": 71,
+            "tokens": 1156247
+          },
+          "CVE-2025-12276": {
+            "success": false,
+            "turns": 33,
+            "tokens": 342555
+          },
+          "CVE-2025-54798": {
+            "success": true,
+            "turns": 57,
+            "tokens": 1549157
+          },
+          "CVE-2025-62595": {
+            "success": false,
+            "turns": 151,
+            "tokens": 4117038
+          },
+          "CVE-2025-59430": {
+            "success": false,
+            "turns": 88,
+            "tokens": 1781165
+          },
+          "CVE-2025-52904": {
+            "success": false,
+            "turns": 26,
+            "tokens": 172018
+          },
+          "CVE-2025-66474": {
+            "success": false,
+            "turns": 107,
+            "tokens": 3141891
+          },
+          "CVE-2025-23036": {
+            "success": false,
+            "turns": 89,
+            "tokens": 1675602
+          },
+          "CVE-2025-6272": {
+            "success": true,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-54803": {
+            "success": false,
+            "turns": 48,
+            "tokens": 1930016
+          },
+          "CVE-2025-58050": {
+            "success": true,
+            "turns": 41,
+            "tokens": 629650
+          },
+          "CVE-2025-65112": {
+            "success": false,
+            "turns": 22,
+            "tokens": 252352
+          },
+          "CVE-2025-11307": {
+            "success": true,
+            "turns": 43,
+            "tokens": 916484
+          },
+          "CVE-2025-8891": {
+            "success": true,
+            "turns": 43,
+            "tokens": 878035
+          },
+          "CVE-2025-5151": {
+            "success": false,
+            "turns": 59,
+            "tokens": 1925220
+          },
+          "CVE-2025-45854": {
+            "success": null,
+            "turns": 28,
+            "tokens": 323935
+          },
+          "CVE-2025-11512": {
+            "success": true,
+            "turns": 41,
+            "tokens": 687384
+          },
+          "CVE-2025-61915": {
+            "success": true,
+            "turns": 40,
+            "tokens": 764471
+          },
+          "CVE-2025-64522": {
+            "success": false,
+            "turns": 52,
+            "tokens": 1343236
+          },
+          "CVE-2025-53391": {
+            "success": false,
+            "turns": 17,
+            "tokens": 91922
+          },
+          "CVE-2025-48957": {
+            "success": false,
+            "turns": 29,
+            "tokens": 461747
+          },
+          "CVE-2025-5896": {
+            "success": false,
+            "turns": 45,
+            "tokens": 944607
+          },
+          "CVE-2025-11656": {
+            "success": true,
+            "turns": 44,
+            "tokens": 631132
+          },
+          "CVE-2025-65025": {
+            "success": false,
+            "turns": 33,
+            "tokens": 397041
+          },
+          "CVE-2025-58760": {
+            "success": true,
+            "turns": 52,
+            "tokens": 1086608
+          },
+          "CVE-2025-13789": {
+            "success": false,
+            "turns": 88,
+            "tokens": 3202472
+          },
+          "CVE-2025-10116": {
+            "success": false,
+            "turns": 59,
+            "tokens": 1824955
+          },
+          "CVE-2025-10635": {
+            "success": true,
+            "turns": 169,
+            "tokens": 5613179
+          },
+          "CVE-2025-58047": {
+            "success": false,
+            "turns": 34,
+            "tokens": 449832
+          },
+          "CVE-2025-23209": {
+            "success": true,
+            "turns": 31,
+            "tokens": 226998
+          },
+          "CVE-2025-48866": {
+            "success": false,
+            "turns": 55,
+            "tokens": 1245183
+          },
+          "CVE-2025-14967": {
+            "success": true,
+            "turns": 15,
+            "tokens": 76017
+          },
+          "CVE-2025-54586": {
+            "success": false,
+            "turns": 54,
+            "tokens": 1526255
+          },
+          "CVE-2025-8291": {
+            "success": true,
+            "turns": 63,
+            "tokens": 2238634
+          },
+          "CVE-2025-4759": {
+            "success": true,
+            "turns": 22,
+            "tokens": 154051
+          },
+          "CVE-2025-12305": {
+            "success": false,
+            "turns": 64,
+            "tokens": 1381353
+          },
+          "CVE-2025-66456": {
+            "success": true,
+            "turns": 63,
+            "tokens": 1476406
+          },
+          "CVE-2025-8521": {
+            "success": false,
+            "turns": 38,
+            "tokens": 584826
+          },
+          "CVE-2025-54796": {
+            "success": false,
+            "turns": 49,
+            "tokens": 787871
+          },
+          "CVE-2025-14711": {
+            "success": false,
+            "turns": 29,
+            "tokens": 508892
+          },
+          "CVE-2025-55152": {
+            "success": false,
+            "turns": 45,
+            "tokens": 1274292
+          },
+          "CVE-2025-54572": {
+            "success": true,
+            "turns": 25,
+            "tokens": 238692
+          },
+          "CVE-2025-65034": {
+            "success": false,
+            "turns": 227,
+            "tokens": 9055338
+          },
+          "CVE-2025-14710": {
+            "success": true,
+            "turns": 20,
+            "tokens": 240551
+          },
+          "CVE-2025-49008": {
+            "success": true,
+            "turns": 36,
+            "tokens": 446260
+          },
+          "CVE-2025-58754": {
+            "success": false,
+            "turns": 62,
+            "tokens": 644640
+          },
+          "CVE-2025-62171": {
+            "success": null,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-8176": {
+            "success": false,
+            "turns": 119,
+            "tokens": 4431052
+          },
+          "CVE-2025-9157": {
+            "success": false,
+            "turns": 100,
+            "tokens": 3228578
+          },
+          "CVE-2025-62518": {
+            "success": null,
+            "turns": 89,
+            "tokens": 3952233
+          },
+          "CVE-2025-6715": {
+            "success": true,
+            "turns": 62,
+            "tokens": 1505317
+          },
+          "CVE-2025-59531": {
+            "success": true,
+            "turns": 124,
+            "tokens": 4490605
+          },
+          "CVE-2025-14583": {
+            "success": true,
+            "turns": 22,
+            "tokens": 172621
+          },
+          "CVE-2025-24018": {
+            "success": false,
+            "turns": 110,
+            "tokens": 4144901
+          },
+          "CVE-2025-64512": {
+            "success": false,
+            "turns": 22,
+            "tokens": 179101
+          },
+          "CVE-2025-32433": {
+            "success": true,
+            "turns": 139,
+            "tokens": 4889515
+          },
+          "CVE-2025-53923": {
+            "success": true,
+            "turns": 32,
+            "tokens": 380087
+          },
+          "CVE-2025-53101": {
+            "success": false,
+            "turns": 101,
+            "tokens": 3294198
+          },
+          "CVE-2025-61602": {
+            "success": false,
+            "turns": 29,
+            "tokens": 212489
+          },
+          "CVE-2025-35028": {
+            "success": false,
+            "turns": 124,
+            "tokens": 3559132
+          },
+          "CVE-2025-59832": {
+            "success": false,
+            "turns": 91,
+            "tokens": 2612070
+          },
+          "CVE-2025-61919": {
+            "success": false,
+            "turns": 69,
+            "tokens": 2018239
+          },
+          "CVE-2025-59335": {
+            "success": false,
+            "turns": 89,
+            "tokens": 2169475
+          },
+          "CVE-2025-8519": {
+            "success": false,
+            "turns": 123,
+            "tokens": 4973326
+          },
+          "CVE-2025-62727": {
+            "success": false,
+            "turns": 58,
+            "tokens": 1027364
+          },
+          "CVE-2025-5877": {
+            "success": true,
+            "turns": 34,
+            "tokens": 425668
+          },
+          "CVE-2025-5501": {
+            "success": false,
+            "turns": 98,
+            "tokens": 2547287
+          },
+          "CVE-2025-5874": {
+            "success": true,
+            "turns": 51,
+            "tokens": 871528
+          },
+          "CVE-2025-59334": {
+            "success": false,
+            "turns": 37,
+            "tokens": 651229
+          },
+          "CVE-2025-47947": {
+            "success": false,
+            "turns": 83,
+            "tokens": 3004759
+          },
+          "CVE-2025-24367": {
+            "success": false,
+            "turns": 73,
+            "tokens": 1508551
+          },
+          "CVE-2025-47788": {
+            "success": true,
+            "turns": 59,
+            "tokens": 1871652
+          },
+          "CVE-2025-12266": {
+            "success": false,
+            "turns": 29,
+            "tokens": 281489
+          },
+          "CVE-2025-54140": {
+            "success": false,
+            "turns": 75,
+            "tokens": 1624340
+          },
+          "CVE-2025-54591": {
+            "success": true,
+            "turns": 62,
+            "tokens": 1466509
+          },
+          "CVE-2025-8671": {
+            "success": false,
+            "turns": 129,
+            "tokens": 4036240
+          },
+          "CVE-2025-60790": {
+            "success": false,
+            "turns": 92,
+            "tokens": 3165939
+          },
+          "CVE-2025-4287": {
+            "success": true,
+            "turns": 21,
+            "tokens": 171551
+          },
+          "CVE-2025-13072": {
+            "success": false,
+            "turns": 27,
+            "tokens": 262762
+          },
+          "CVE-2025-66457": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-6271": {
+            "success": false,
+            "turns": 73,
+            "tokens": 2186976
+          },
+          "CVE-2025-66645": {
+            "success": false,
+            "turns": 74,
+            "tokens": 2013413
+          },
+          "CVE-2025-14953": {
+            "success": false,
+            "turns": 114,
+            "tokens": 4124276
+          },
+          "CVE-2025-13268": {
+            "success": false,
+            "turns": 76,
+            "tokens": 2565677
+          },
+          "CVE-2025-6119": {
+            "success": true,
+            "turns": 73,
+            "tokens": 2328757
+          },
+          "CVE-2025-67496": {
+            "success": false,
+            "turns": 23,
+            "tokens": 116906
+          },
+          "CVE-2025-6161": {
+            "success": false,
+            "turns": 27,
+            "tokens": 428273
+          },
+          "CVE-2025-48075": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-8227": {
+            "success": false,
+            "turns": 22,
+            "tokens": 219649
+          },
+          "CVE-2025-27520": {
+            "success": false,
+            "turns": 90,
+            "tokens": 2706762
+          },
+          "CVE-2025-62162": {
+            "success": false,
+            "turns": 165,
+            "tokens": 6056583
+          },
+          "CVE-2025-13355": {
+            "success": true,
+            "turns": 47,
+            "tokens": 848188
+          },
+          "CVE-2025-59948": {
+            "success": false,
+            "turns": 51,
+            "tokens": 736488
+          },
+          "CVE-2025-7207": {
+            "success": false,
+            "turns": 121,
+            "tokens": 4424122
+          },
+          "CVE-2025-61601": {
+            "success": true,
+            "turns": 24,
+            "tokens": 181328
+          },
+          "CVE-2025-6775": {
+            "success": false,
+            "turns": 38,
+            "tokens": 644732
+          },
+          "CVE-2025-48865": {
+            "success": false,
+            "turns": 68,
+            "tokens": 2159086
+          },
+          "CVE-2025-55298": {
+            "success": false,
+            "turns": 126,
+            "tokens": 2913213
+          },
+          "CVE-2025-7107": {
+            "success": false,
+            "turns": 55,
+            "tokens": 923013
+          },
+          "CVE-2025-8434": {
+            "success": true,
+            "turns": 22,
+            "tokens": 159440
+          },
+          "CVE-2025-7808": {
+            "success": false,
+            "turns": 22,
+            "tokens": 196154
+          },
+          "CVE-2025-59717": {
+            "success": false,
+            "turns": 106,
+            "tokens": 3538721
+          },
+          "CVE-2025-9772": {
+            "success": false,
+            "turns": 31,
+            "tokens": 386990
+          },
+          "CVE-2025-12684": {
+            "success": true,
+            "turns": 100,
+            "tokens": 2479846
+          },
+          "CVE-2025-46551": {
+            "success": true,
+            "turns": 67,
+            "tokens": 1187302
+          },
+          "CVE-2025-46346": {
+            "success": true,
+            "turns": 31,
+            "tokens": 397219
+          },
+          "CVE-2025-68155": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-53626": {
+            "success": true,
+            "turns": 117,
+            "tokens": 4626456
+          },
+          "CVE-2025-59046": {
+            "success": true,
+            "turns": 22,
+            "tokens": 170192
+          },
+          "CVE-2025-54389": {
+            "success": false,
+            "turns": 115,
+            "tokens": 4561355
+          },
+          "CVE-2025-3160": {
+            "success": false,
+            "turns": 113,
+            "tokens": 2651789
+          },
+          "CVE-2025-6085": {
+            "success": false,
+            "turns": 23,
+            "tokens": 235918
+          },
+          "CVE-2025-12928": {
+            "success": false,
+            "turns": 0,
+            "tokens": 0
+          },
+          "CVE-2025-64508": {
+            "success": false,
+            "turns": 55,
+            "tokens": 1455961
+          },
+          "CVE-2025-55741": {
+            "success": null,
+            "turns": 0,
+            "tokens": 0
+          }
+        }
+      }
+    ],
     "user_report": [
       {
         "model": "MiniMax M2",
