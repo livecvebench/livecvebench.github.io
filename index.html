@@ -43,11 +43,11 @@
                             </a>
                         </div>
                     </div>
-                    <a class="navbar-item" href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
+                    <a class="navbar-item" href="https://github.com/livecvebench/CVE-Factory" target="_blank">
                         <span class="icon"><i class="fab fa-github"></i></span>
                         <span>GitHub</span>
                     </a>
-                    <a class="navbar-item" href="#" target="_blank">
+                    <a class="navbar-item" href="https://arxiv.org/abs/2602.03012" target="_blank">
                         <span class="icon"><i class="fas fa-file-alt"></i></span>
                         <span>Paper</span>
                     </a>
@@ -83,11 +83,11 @@
                         <span class="icon"><i class="fas fa-trophy"></i></span>
                         <span>View Leaderboard</span>
                     </a>
-                    <a class="button is-light is-medium hero-btn" href="https://github.com/livecvebench/LiveCVEBench-Preview" target="_blank">
+                    <a class="button is-light is-medium hero-btn" href="https://github.com/livecvebench/CVE-Factory" target="_blank">
                         <span class="icon"><i class="fab fa-github"></i></span>
                         <span>GitHub</span>
                     </a>
-                    <a class="button is-info is-medium hero-btn" href="#" target="_blank">
+                    <a class="button is-info is-medium hero-btn" href="https://arxiv.org/abs/2602.03012" target="_blank">
                         <span class="icon"><i class="fas fa-file-alt"></i></span>
                         <span>Paper</span>
                     </a>
@@ -102,33 +102,22 @@
         </div>
     </section>
 
-    <!-- Stats Overview Section -->
-    <section class="section stats-section" id="stats">
+    <!-- CVE-Factory Introduction Section -->
+    <section class="section cve-factory-section" id="stats">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-bug"></i></div>
-                    <div class="stat-number" data-target="0" id="statCVEs">0</div>
-                    <div class="stat-label">CVE Tasks</div>
-                    <div class="stat-desc">Real-world vulnerabilities</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
-                    <div class="stat-number" data-target="0" id="statModels">0</div>
-                    <div class="stat-label">LLM Models</div>
-                    <div class="stat-desc">Tested & evaluated</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-robot"></i></div>
-                    <div class="stat-number" data-target="0" id="statAgents">0</div>
-                    <div class="stat-label">Code Agents</div>
-                    <div class="stat-desc">Autonomous systems</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-                    <div class="stat-number" id="statUpdated">-</div>
-                    <div class="stat-label">Last Updated</div>
-                    <div class="stat-desc">Continuously evolving</div>
+            <div class="cve-factory-content">
+                <h2 class="title is-3 cve-factory-title">
+                    <span class="icon"><i class="fas fa-cogs"></i></span>
+                    CVE-Factory
+                </h2>
+                <p class="cve-factory-desc">
+                    <strong>CVE-Factory</strong> is a Multi-Agent system for fully automated, end-to-end CVE reproduction.
+                    Given CVE records, the system automatically researches details, generates test cases, builds Docker environments,
+                    and validates that each vulnerability can be both exploited and patched. The pipeline transforms CVE metadata
+                    into reproducible, testable vulnerability environments without manual intervention.
+                </p>
+                <div class="pipeline-image-container">
+                    <img src="images/pipeline.svg" alt="CVE-Factory Pipeline" class="pipeline-image">
                 </div>
             </div>
         </div>

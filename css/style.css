@@ -351,6 +351,73 @@ body {
     color: #94a3b8;
 }
 
+/* CVE-Factory Introduction Section */
+.cve-factory-section {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    padding: 4rem 1.5rem;
+    position: relative;
+}
+
+.cve-factory-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cve-factory-title {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+}
+
+.cve-factory-title .icon {
+    color: #06b6d4;
+}
+
+.cve-factory-desc {
+    color: #e2e8f0;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+}
+
+.cve-factory-desc strong {
+    color: #60a5fa;
+}
+
+.pipeline-image-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.pipeline-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .cve-factory-title {
+        font-size: 1.8rem;
+    }
+
+    .cve-factory-desc {
+        font-size: 1rem;
+    }
+
+    .pipeline-image-container {
+        padding: 1rem;
+    }
+}
+
 /* Top Performers Section */
 .top-performers-section {
     background-color: var(--background-color);
