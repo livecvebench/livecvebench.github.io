@@ -129,13 +129,53 @@
     </section>
 
     <!-- CVE-Factory Introduction Section -->
-    <section class="section cve-factory-section" id="stats">
+    <section class="section cve-factory-section" id="about">
         <div class="container">
             <div class="cve-factory-content">
                 <h2 class="title is-3 cve-factory-title">
+                    <span class="icon"><i class="fas fa-info-circle"></i></span>
+                    About LiveCVEBench
+                </h2>
+                <div class="content mb-5">
+                    <p>
+                        <strong>LiveCVEBench</strong> is a continuously updated <strong>agentic benchmark</strong> for evaluating Code Agents
+                        on real-world CVE (Common Vulnerabilities and Exposures) vulnerability fixing tasks.
+                    </p>
+                    <p>
+                        Agents are deployed in <strong>real development environments</strong> where they must autonomously explore codebases,
+                        understand vulnerability context, and implement proper fixes — just like human developers would.
+                        Unlike static benchmarks that may suffer from data contamination, LiveCVEBench sources new CVEs
+                        after model training cutoff dates, ensuring a fair and unbiased evaluation.
+                    </p>
+                </div>
+                <div class="features columns is-multiline mb-6">
+                    <div class="column is-4">
+                        <div class="feature-card">
+                            <span class="feature-icon"><i class="fas fa-sync-alt"></i></span>
+                            <h4>Continuously Updated</h4>
+                            <p>New CVEs added regularly to prevent data contamination</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div class="feature-card">
+                            <span class="feature-icon"><i class="fas fa-bug"></i></span>
+                            <h4>Real-World Vulnerabilities</h4>
+                            <p>Based on actual CVEs from production software</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div class="feature-card">
+                            <span class="feature-icon"><i class="fas fa-robot"></i></span>
+                            <h4>Agentic Evaluation</h4>
+                            <p>Autonomous exploration and fixing in real environments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="title is-4 cve-factory-title">
                     <span class="icon"><i class="fas fa-cogs"></i></span>
                     CVE-Factory
-                </h2>
+                </h3>
                 <p class="cve-factory-desc">
                     <strong>CVE-Factory</strong> is a Multi-Agent system for fully automated, end-to-end CVE reproduction.
                     Given CVE records, the system automatically researches details, generates test cases, builds Docker environments,
@@ -170,80 +210,6 @@
                     <a class="button is-primary is-medium" href="tasks.html">
                         <span class="icon"><i class="fas fa-th"></i></span>
                         <span>View All Tasks</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="content-box">
-                <h2 class="title is-3 section-title">
-                    <span class="icon"><i class="fas fa-info-circle"></i></span>
-                    About LiveCVEBench
-                </h2>
-                <div class="content">
-                    <p>
-                        <strong>LiveCVEBench</strong> is a continuously updated <strong>agentic benchmark</strong> for evaluating Code Agents
-                        on real-world CVE (Common Vulnerabilities and Exposures) vulnerability fixing tasks.
-                    </p>
-                    <p>
-                        Agents are deployed in <strong>real development environments</strong> where they must autonomously explore codebases,
-                        understand vulnerability context, and implement proper fixes — just like human developers would.
-                    </p>
-                    <p>
-                        Unlike static benchmarks that may suffer from data contamination, LiveCVEBench sources new CVEs
-                        after model training cutoff dates, ensuring a fair and unbiased evaluation of agent capabilities.
-                    </p>
-                    <div class="features columns is-multiline mt-5">
-                        <div class="column is-4">
-                            <div class="feature-card">
-                                <span class="feature-icon"><i class="fas fa-sync-alt"></i></span>
-                                <h4>Continuously Updated</h4>
-                                <p>New CVEs added regularly to prevent data contamination</p>
-                            </div>
-                        </div>
-                        <div class="column is-4">
-                            <div class="feature-card">
-                                <span class="feature-icon"><i class="fas fa-bug"></i></span>
-                                <h4>Real-World Vulnerabilities</h4>
-                                <p>Based on actual CVEs from production software</p>
-                            </div>
-                        </div>
-                        <div class="column is-4">
-                            <div class="feature-card">
-                                <span class="feature-icon"><i class="fas fa-robot"></i></span>
-                                <h4>Agentic Evaluation</h4>
-                                <p>Autonomous exploration and fixing in real environments</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Submit Section -->
-    <section class="section" id="submit">
-        <div class="container">
-            <div class="content-box has-text-centered">
-                <h2 class="title is-3 section-title">
-                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
-                    Submit Your Results
-                </h2>
-                <p class="mb-4">
-                    Want to submit your Code Agent's results to the leaderboard? Check out our submission guidelines.
-                </p>
-                <div class="buttons is-centered">
-                    <a class="button is-primary" href="submit.html">
-                        <span class="icon"><i class="fas fa-book"></i></span>
-                        <span>Submission Guide (EN)</span>
-                    </a>
-                    <a class="button is-info" href="submit-zh.html">
-                        <span class="icon"><i class="fas fa-book"></i></span>
-                        <span>提交指南 (中文)</span>
                     </a>
                 </div>
             </div>
