@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial - LiveCVEBench</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        /* Tutorial Layout */
+        .tutorial-wrapper {
+            display: flex;
+            min-height: calc(100vh - 52px);
+            padding-top: 52px;
+        }
+
+        /* Sidebar */
+        .tutorial-sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: var(--card-background);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: 52px;
+            height: calc(100vh - 52px);
+            overflow-y: auto;
+            padding: 1.5rem 0;
+            z-index: 10;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 0.5rem 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li a {
+            display: block;
+            padding: 0.5rem 1.5rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-nav li a:hover {
+            background: rgba(37, 99, 235, 0.06);
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav li a.active {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .sidebar-nav li.toc-h2 a {
+            padding-left: 2.5rem;
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .sidebar-nav li.toc-h2 a:hover,
+        .sidebar-nav li.toc-h2 a.active {
+            color: var(--primary-color);
+        }
+
+        /* Main content */
+        .tutorial-main {
+            flex: 1;
+            min-width: 0;
+            padding: 2.5rem 3rem;
+            max-width: 900px;
+        }
+
+        /* Markdown rendered content */
+        .markdown-body {
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem 0;
+            color: var(--text-color);
+        }
+
+        .markdown-body h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        .markdown-body p {
+            margin-bottom: 1rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-body strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.35rem;
+        }
+
+        .markdown-body li > ul,
+        .markdown-body li > ol {
+            margin-top: 0.35rem;
+            margin-bottom: 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 0.75rem 1.25rem;
+            margin: 1rem 0;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-muted);
+        }
+
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-body pre {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .markdown-body pre code {
+            background: transparent;
+            padding: 0;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        .markdown-body code {
+            background: rgba(37, 99, 235, 0.08);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            color: var(--text-color);
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+        }
+
+        .markdown-body table th {
+            background: rgba(37, 99, 235, 0.08);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .markdown-body table td {
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .markdown-body table tr:hover {
+            background: rgba(37, 99, 235, 0.03);
+        }
+
+        .markdown-body hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Mobile sidebar toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 1.2rem;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 49;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .tutorial-sidebar {
+                position: fixed;
+                left: -300px;
+                top: 52px;
+                height: calc(100vh - 52px);
+                transition: left 0.3s ease;
+                z-index: 50;
+                box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+            }
+
+            .tutorial-sidebar.open {
+                left: 0;
+            }
+
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .tutorial-main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-name" href="index.html">
+                    <span class="brand-icon"><i class="fas fa-shield-virus"></i></span>
+                    <span>LiveCVEBench</span>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="leaderboard.html">Leaderboard</a>
+                    <a class="navbar-item" href="tasks.html">Tasks</a>
+                    <a class="navbar-item" href="tutorial.html"><strong>Tutorial</strong></a>
+                    <a class="navbar-item" href="index.html#about">About</a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">Submit</a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="submit.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>GUIDE (EN)</span>
+                            </a>
+                            <a class="navbar-item" href="submit-zh.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>指南 (中文)</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a class="navbar-item" href="https://github.com/livecvebench/CVE-Factory" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="navbar-item" href="https://arxiv.org/abs/2602.03012" target="_blank">
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span>Paper</span>
+                    </a>
+                    <div class="navbar-item">
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tutorial-wrapper">
+        <!-- Sidebar -->
+        <aside class="tutorial-sidebar" id="tutorialSidebar">
+            <div class="sidebar-title">Getting Started</div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active" data-doc="docs/readme.md">Overview</a></li>
+            </ul>
+            <div class="sidebar-title">Documentation</div>
+            <ul class="sidebar-nav">
+                <li><a href="#" data-doc="docs/architecture.md">Architecture</a></li>
+                <li><a href="#" data-doc="docs/agent_management.md">Agent Management</a></li>
+                <li><a href="#" data-doc="docs/communication.md">Communication</a></li>
+                <li><a href="#" data-doc="docs/future.md">Future Roadmap</a></li>
+            </ul>
+        </aside>
+
+        <!-- Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="tutorial-main">
+            <article class="markdown-body" id="markdownContent">
+                <div class="task-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading documentation...
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        // Theme
+        (function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const icon = themeToggle.querySelector('i');
+            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            themeToggle.addEventListener('click', function() {
+                const cur = document.documentElement.getAttribute('data-theme');
+                const next = cur === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            });
+        })();
+
+        // Navbar burger
+        (function() {
+            const burger = document.querySelector('.navbar-burger');
+            const menu = document.querySelector('#navMenu');
+            if (burger && menu) {
+                burger.addEventListener('click', function() {
+                    burger.classList.toggle('is-active');
+                    menu.classList.toggle('is-active');
+                });
+            }
+        })();
+
+        // Mobile sidebar toggle
+        (function() {
+            const toggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('tutorialSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            toggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('open');
+            });
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+            });
+        })();
+
+        // Marked config
+        marked.setOptions({
+            gfm: true,
+            breaks: false,
+            highlight: function(code, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(code, { language: lang }).value;
+                }
+                return hljs.highlightAuto(code).value;
+            }
+        });
+
+        const contentEl = document.getElementById('markdownContent');
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a[data-doc]');
+        let currentDoc = 'docs/readme.md';
+
+        // Build sub-TOC from rendered headings
+        function buildSubToc(docLink) {
+            // Remove old sub-toc items
+            document.querySelectorAll('.sidebar-nav li.toc-h2').forEach(el => el.remove());
+
+            const headings = contentEl.querySelectorAll('h2[id]');
+            if (headings.length === 0) return;
+
+            const parentLi = docLink.parentElement;
+            const parentUl = parentLi.parentElement;
+            let insertAfter = parentLi;
+
+            headings.forEach(h => {
+                const li = document.createElement('li');
+                li.className = 'toc-h2';
+                const a = document.createElement('a');
+                a.href = '#' + h.id;
+                a.textContent = h.textContent;
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Update active state
+                    document.querySelectorAll('.sidebar-nav li.toc-h2 a').forEach(x => x.classList.remove('active'));
+                    a.classList.add('active');
+                    // Close mobile sidebar
+                    document.getElementById('tutorialSidebar').classList.remove('open');
+                    document.getElementById('sidebarOverlay').classList.remove('open');
+                });
+                li.appendChild(a);
+                insertAfter.after(li);
+                insertAfter = li;
+            });
+        }
+
+        // Load and render markdown
+        async function loadDoc(path, linkEl) {
+            contentEl.innerHTML = '<div class="task-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+            currentDoc = path;
+
+            // Update active sidebar link
+            sidebarLinks.forEach(a => a.classList.remove('active'));
+            linkEl.classList.add('active');
+
+            try {
+                const resp = await fetch(path);
+                if (!resp.ok) throw new Error('Failed to load');
+                let md = await resp.text();
+
+                // Fix relative image paths for readme
+                if (path.includes('readme.md')) {
+                    md = md.replace(/!\[([^\]]*)\]\(docs\/pipeline\.svg\)/g,
+                        '![$1](https://raw.githubusercontent.com/livecvebench/CVE-Factory/main/docs/pipeline.svg)');
+                }
+
+                const html = marked.parse(md);
+                contentEl.innerHTML = html;
+
+                // Add IDs to headings for TOC linking
+                contentEl.querySelectorAll('h2, h3').forEach(h => {
+                    if (!h.id) {
+                        h.id = h.textContent.toLowerCase()
+                            .replace(/[^\w\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-')
+                            .trim();
+                    }
+                });
+
+                // Re-highlight code blocks
+                contentEl.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightElement(block);
+                });
+
+                // Build sub-toc
+                buildSubToc(linkEl);
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                contentEl.innerHTML = '<p style="color:var(--text-muted)"><i class="fas fa-exclamation-circle"></i> Failed to load documentation.</p>';
+            }
+
+            // Close mobile sidebar
+            document.getElementById('tutorialSidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('open');
+        }
+
+        // Sidebar click handlers
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadDoc(this.dataset.doc, this);
+            });
+        });
+
+        // Load initial doc
+        loadDoc('docs/readme.md', sidebarLinks[0]);
+    </script>
+</body>
+</html>
