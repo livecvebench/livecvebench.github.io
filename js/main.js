@@ -126,42 +126,49 @@ async function loadLeaderboard() {
         leaderboardData = allResultsData[currentInstructionType] || [];
         cveData = cveDataByType[currentInstructionType] || [];
 
-        // Update metadata
-        document.getElementById('lastUpdated').textContent = data.metadata.lastUpdated;
-        document.getElementById('totalCVEs').textContent = cveData.length;
+        // Update metadata (guarded — only on pages with these elements)
+        const lastUpdatedEl = document.getElementById('lastUpdated');
+        const totalCVEsEl = document.getElementById('totalCVEs');
+        if (lastUpdatedEl) lastUpdatedEl.textContent = data.metadata.lastUpdated;
+        if (totalCVEsEl) totalCVEsEl.textContent = cveData.length;
 
-        // Update stats section
+        // Update stats section (index page)
         updateStats(data);
 
-        // Render top performers preview
+        // Render top performers preview (index page)
         renderTopPerformers();
 
-        // Render sample tasks
+        // Render sample tasks (index page)
         renderSampleTasks();
 
-        // Populate filter dropdowns
-        populateFilters();
+        // Leaderboard page features
+        if (document.getElementById('leaderboardBody')) {
+            populateFilters();
+            initFilters();
+            initTimeline();
+            renderLeaderboard();
+        }
 
-        // Initialize filters after populating
-        initFilters();
-
-        // Initialize timeline (after data is loaded)
-        initTimeline();
-
-        // Initialize full tasks view
-        initFullTasksView();
-
-        // Render table
-        renderLeaderboard();
+        // Tasks page features (auto-init when on tasks.html)
+        if (document.getElementById('fullTasksGrid')) {
+            populateTaskFilters();
+            initTasksTimeline();
+            initTasksFilterListeners();
+            tasksCurrentPage = 1;
+            renderFullTasks();
+        }
     } catch (error) {
-        console.error('Failed to load leaderboard data:', error);
-        document.getElementById('leaderboardBody').innerHTML = `
-            <tr>
-                <td colspan="9" class="has-text-centered has-text-grey">
-                    <i class="fas fa-exclamation-circle"></i> Failed to load leaderboard data
-                </td>
-            </tr>
-        `;
+        console.error('Failed to load data:', error);
+        const tbody = document.getElementById('leaderboardBody');
+        if (tbody) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" class="has-text-centered has-text-grey">
+                        <i class="fas fa-exclamation-circle"></i> Failed to load leaderboard data
+                    </td>
+                </tr>
+            `;
+        }
     }
 }
 
@@ -356,11 +363,12 @@ function repopulateFilters() {
 
 // Populate filter dropdowns with unique values
 function populateFilters() {
-    const models = [...new Set(leaderboardData.map(item => item.model))].sort();
-    const agents = [...new Set(leaderboardData.map(item => item.agent))].sort();
-
     const modelFilter = document.getElementById('modelFilter');
     const agentFilter = document.getElementById('agentFilter');
+    if (!modelFilter || !agentFilter) return;
+
+    const models = [...new Set(leaderboardData.map(item => item.model))].sort();
+    const agents = [...new Set(leaderboardData.map(item => item.agent))].sort();
 
     models.forEach(model => {
         const option = document.createElement('option');
@@ -553,11 +561,14 @@ function calculateStats(item, filteredCVEIds) {
 // Render leaderboard table
 function renderLeaderboard() {
     const tbody = document.getElementById('leaderboardBody');
+    if (!tbody) return;
 
     // Get filtered CVE IDs
     const filteredCVEIds = getFilteredCVEIds();
-    document.getElementById('filteredCVEs').textContent = filteredCVEIds.length;
-    document.getElementById('totalCVEsHeader').textContent = `/ ${filteredCVEIds.length}`;
+    const filteredCVEsEl = document.getElementById('filteredCVEs');
+    const totalCVEsHeaderEl = document.getElementById('totalCVEsHeader');
+    if (filteredCVEsEl) filteredCVEsEl.textContent = filteredCVEIds.length;
+    if (totalCVEsHeaderEl) totalCVEsHeaderEl.textContent = `/ ${filteredCVEIds.length}`;
 
     // Filter and calculate stats for each item
     let filteredData = leaderboardData
@@ -709,6 +720,8 @@ function initFilters() {
     const modelTypeFilter = document.getElementById('modelTypeFilter');
     const agentTypeFilter = document.getElementById('agentTypeFilter');
 
+    if (!modelFilter || !agentFilter) return;
+
     modelFilter.addEventListener('change', function() {
         currentFilters.model = this.value;
         renderLeaderboard();
@@ -733,6 +746,7 @@ function initFilters() {
 // Initialize timeline
 function initTimeline() {
     const leaderboardTimeline = document.querySelector('#leaderboard .timeline-filter');
+    if (!leaderboardTimeline) return;
     const timelineButtons = leaderboardTimeline.querySelectorAll('.timeline-btn');
     const rangeMin = document.getElementById('rangeMin');
     const rangeMax = document.getElementById('rangeMax');
@@ -896,6 +910,7 @@ function initTimeline() {
 // Initialize sorting
 function initSorting() {
     const sortableHeaders = document.querySelectorAll('.sortable');
+    if (sortableHeaders.length === 0) return;
 
     sortableHeaders.forEach(header => {
         header.addEventListener('click', function() {
@@ -924,33 +939,6 @@ function initSorting() {
             renderLeaderboard();
         });
     });
-}
-
-// Initialize full tasks view
-function initFullTasksView() {
-    const viewAllBtn = document.getElementById('viewAllTasksBtn');
-    const closeBtn = document.getElementById('closeFullTasksBtn');
-    const fullTasksSection = document.getElementById('full-tasks');
-
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener('click', function() {
-            fullTasksSection.style.display = 'block';
-            viewAllBtn.style.display = 'none';
-            populateTaskFilters();
-            initTasksTimeline();
-            initTasksFilterListeners();
-            tasksCurrentPage = 1;
-            renderFullTasks();
-            fullTasksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            fullTasksSection.style.display = 'none';
-            viewAllBtn.style.display = 'inline-flex';
-        });
-    }
 }
 
 // Populate tag dropdown from data

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All CVE Tasks - LiveCVEBench</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item brand-name" href="index.html">
+                    <span class="brand-icon"><i class="fas fa-shield-virus"></i></span>
+                    <span>LiveCVEBench</span>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="leaderboard.html">Leaderboard</a>
+                    <a class="navbar-item" href="tasks.html"><strong>Tasks</strong></a>
+                    <a class="navbar-item" href="index.html#about">About</a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">Submit</a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="submit.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>GUIDE (EN)</span>
+                            </a>
+                            <a class="navbar-item" href="submit-zh.html">
+                                <span class="icon"><i class="fas fa-book"></i></span>
+                                <span>指南 (中文)</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a class="navbar-item" href="https://github.com/livecvebench/CVE-Factory" target="_blank">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="navbar-item" href="https://arxiv.org/abs/2602.03012" target="_blank">
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span>Paper</span>
+                    </a>
+                    <div class="navbar-item">
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Full Tasks Section -->
+    <section class="section full-tasks-section" id="full-tasks">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-list-alt"></i></span>
+                    All CVE Tasks
+                </h2>
+
+                <!-- Timeline Filter -->
+                <div class="tasks-timeline-filter mb-4">
+                    <div class="timeline-header">
+                        <div class="timeline-buttons">
+                            <button class="button timeline-btn active" data-tasks-year="all">All</button>
+                            <button class="button timeline-btn" data-tasks-year="2025">2025</button>
+                        </div>
+                        <span class="tasks-count-badge" id="tasksCountBadge"></span>
+                    </div>
+                    <div class="tasks-date-range-slider" style="display: none;">
+                        <div class="range-slider-container">
+                            <span class="date-label date-start" id="tasksDateStart">2025-01-01</span>
+                            <div class="range-track"></div>
+                            <div class="range-selected" id="tasksRangeSelected"></div>
+                            <input type="range" id="tasksRangeMin" class="range-input" min="0" max="364" value="0">
+                            <input type="range" id="tasksRangeMax" class="range-input" min="0" max="364" value="364">
+                            <span class="date-label date-end" id="tasksDateEnd">2025-12-31</span>
+                        </div>
+                        <div class="timeline-ticks" id="tasksTimelineTicks"></div>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="tasks-filters mb-4">
+                    <div class="filter-group">
+                        <label class="filter-label">Difficulty</label>
+                        <div class="select">
+                            <select id="tasksDifficultyFilter">
+                                <option value="all">All</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Tag</label>
+                        <div class="select">
+                            <select id="tasksTagFilter">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Search</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" id="tasksSearchInput" placeholder="CVE ID or keyword...">
+                            <span class="icon is-left"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Tasks Grid -->
+                <div class="tasks-grid" id="fullTasksGrid">
+                    <div class="task-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading tasks...
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container has-text-centered mt-5" id="tasksPagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>LiveCVEBench</strong>
+                </p>
+                <p>
+                    If you have any suggestions or would like to join/contribute to this project, please contact <a href="mailto:xzluo@ir.hit.edu.cn">xzluo@ir.hit.edu.cn</a>!
+                </p>
+                <p class="is-size-7 has-text-grey">
+                    Licensed under MIT License.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js?v=11"></script>
+</body>
+</html>
