@@ -74,15 +74,43 @@ let currentFilters = {
     timeline: { type: 'all' }
 };
 
+// Full tasks view state
+let allTasksData = [];
+const TASKS_PER_PAGE = 24;
+let tasksCurrentPage = 1;
+let tasksFilters = {
+    timeline: { type: 'all' },
+    difficulty: 'all',
+    tag: 'all',
+    search: ''
+};
+
 // Load leaderboard data from JSON
 async function loadLeaderboard() {
     try {
-        const response = await fetch('data/leaderboard.json');
-        const data = await response.json();
+        const [leaderboardResponse, tasksResponse] = await Promise.all([
+            fetch('data/leaderboard.json'),
+            fetch('data/cve_tasks_summary.json')
+        ]);
+        const data = await leaderboardResponse.json();
+        const tasksSummary = await tasksResponse.json();
 
         // Store all results by instruction type
         allResultsData = data.results;
         allCveData = data.cves || [];
+
+        // Build date lookup from leaderboard CVEs
+        const cveDateMap = {};
+        allCveData.forEach(cve => { cveDateMap[cve.id] = cve.date; });
+
+        // Build allTasksData by joining dates
+        allTasksData = tasksSummary.map(task => ({
+            cve_id: task.cve_id,
+            instruction: task.instruction,
+            difficulty: task.difficulty,
+            tags: task.tags || [],
+            date: cveDateMap[task.cve_id] || null
+        }));
 
         // Build CVE data by instruction type
         for (const type of ['cve_description', 'user_report']) {
@@ -119,6 +147,9 @@ async function loadLeaderboard() {
 
         // Initialize timeline (after data is loaded)
         initTimeline();
+
+        // Initialize full tasks view
+        initFullTasksView();
 
         // Render table
         renderLeaderboard();
@@ -237,57 +268,58 @@ function renderTopPerformers() {
     container.innerHTML = html;
 }
 
+// Render a single task card (shared between sample and full views)
+function renderTaskCard(task) {
+    const difficulty = task.difficulty || 'medium';
+    const tags = task.tags || [];
+    const firstLine = (task.instruction || '').split('\n').filter(l => l.trim()).slice(0, 3).join(' ');
+
+    const tagsHtml = tags.slice(0, 4).map(tag => `
+        <span class="task-tag">
+            <i class="fas fa-tag"></i> ${escapeHtml(tag)}
+        </span>
+    `).join('');
+
+    return `
+        <div class="task-card">
+            <div class="task-header">
+                <span class="task-cve-id">${escapeHtml(task.cve_id)}</span>
+                <span class="task-difficulty ${difficulty}">${difficulty}</span>
+            </div>
+            <div class="task-instruction">${escapeHtml(firstLine)}</div>
+            <div class="task-meta">
+                ${tagsHtml}
+            </div>
+            <div class="task-date">
+                <i class="fas fa-calendar"></i> ${task.date || 'Unknown date'}
+            </div>
+        </div>
+    `;
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 // Render sample CVE tasks
 function renderSampleTasks() {
     const container = document.getElementById('tasksGrid');
     if (!container) return;
 
-    // Get random sample of CVEs (up to 6)
-    const sampleCves = [...allCveData]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 6);
-
-    if (sampleCves.length === 0) {
+    if (allTasksData.length === 0) {
         container.innerHTML = '<div class="task-loading">No CVE data available</div>';
         return;
     }
 
-    const severityMap = {
-        'critical': 'critical',
-        'high': 'high',
-        'medium': 'medium',
-        'low': 'low'
-    };
+    // Get random sample of tasks (up to 6)
+    const sampleTasks = [...allTasksData]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 6);
 
-    const html = sampleCves.map(cve => {
-        const severity = (cve.severity || 'medium').toLowerCase();
-        const severityClass = severityMap[severity] || 'medium';
-        const language = cve.language || 'Unknown';
-        const category = cve.category || 'Vulnerability';
-
-        return `
-            <div class="task-card">
-                <div class="task-header">
-                    <span class="task-cve-id">${cve.id}</span>
-                    <span class="task-severity ${severityClass}">${severity}</span>
-                </div>
-                <div class="task-title">${cve.title || cve.id}</div>
-                <div class="task-meta">
-                    <span class="task-tag">
-                        <i class="fas fa-code"></i> ${language}
-                    </span>
-                    <span class="task-tag">
-                        <i class="fas fa-tag"></i> ${category}
-                    </span>
-                </div>
-                <div class="task-date">
-                    <i class="fas fa-calendar"></i> ${cve.date || 'Unknown date'}
-                </div>
-            </div>
-        `;
-    }).join('');
-
-    container.innerHTML = html;
+    container.innerHTML = sampleTasks.map(task => renderTaskCard(task)).join('');
 }
 
 // Re-populate filter dropdowns when switching tabs
@@ -700,7 +732,8 @@ function initFilters() {
 
 // Initialize timeline
 function initTimeline() {
-    const timelineButtons = document.querySelectorAll('.timeline-btn');
+    const leaderboardTimeline = document.querySelector('#leaderboard .timeline-filter');
+    const timelineButtons = leaderboardTimeline.querySelectorAll('.timeline-btn');
     const rangeMin = document.getElementById('rangeMin');
     const rangeMax = document.getElementById('rangeMax');
     const rangeSelected = document.getElementById('rangeSelected');
@@ -893,6 +926,344 @@ function initSorting() {
     });
 }
 
+// Initialize full tasks view
+function initFullTasksView() {
+    const viewAllBtn = document.getElementById('viewAllTasksBtn');
+    const closeBtn = document.getElementById('closeFullTasksBtn');
+    const fullTasksSection = document.getElementById('full-tasks');
+
+    if (viewAllBtn) {
+        viewAllBtn.addEventListener('click', function() {
+            fullTasksSection.style.display = 'block';
+            viewAllBtn.style.display = 'none';
+            populateTaskFilters();
+            initTasksTimeline();
+            initTasksFilterListeners();
+            tasksCurrentPage = 1;
+            renderFullTasks();
+            fullTasksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            fullTasksSection.style.display = 'none';
+            viewAllBtn.style.display = 'inline-flex';
+        });
+    }
+}
+
+// Populate tag dropdown from data
+function populateTaskFilters() {
+    const tagFilter = document.getElementById('tasksTagFilter');
+    if (!tagFilter || tagFilter.options.length > 1) return; // already populated
+
+    const allTags = new Set();
+    allTasksData.forEach(task => {
+        (task.tags || []).forEach(tag => allTags.add(tag));
+    });
+
+    [...allTags].sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagFilter.appendChild(option);
+    });
+}
+
+// Initialize tasks timeline (isolated from leaderboard timeline)
+let tasksTimelineInitialized = false;
+function initTasksTimeline() {
+    if (tasksTimelineInitialized) return;
+    tasksTimelineInitialized = true;
+
+    const timelineButtons = document.querySelectorAll('.tasks-timeline-filter .timeline-btn');
+    const rangeMin = document.getElementById('tasksRangeMin');
+    const rangeMax = document.getElementById('tasksRangeMax');
+    const rangeSelected = document.getElementById('tasksRangeSelected');
+    const dateStartEl = document.getElementById('tasksDateStart');
+    const dateEndEl = document.getElementById('tasksDateEnd');
+    const timelineTicks = document.getElementById('tasksTimelineTicks');
+
+    const minDate = new Date('2025-01-01');
+    const maxDate = new Date('2025-12-31');
+    const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24));
+
+    // Generate tick marks
+    function generateTicks() {
+        let html = '';
+        for (let month = 0; month < 12; month++) {
+            const tickDate = new Date(2025, month, 1);
+            const daysSinceStart = Math.floor((tickDate - minDate) / (1000 * 60 * 60 * 24));
+            const percent = daysSinceStart / totalDays;
+            const position = `calc(10px + ${percent * 100}% - ${percent * 20}px)`;
+            html += `<span class="timeline-tick" style="left: ${position}">${month + 1}/1</span>`;
+        }
+        const endPosition = `calc(10px + 100% - 20px)`;
+        html += `<span class="timeline-tick" style="left: ${endPosition}">12/31</span>`;
+        timelineTicks.innerHTML = html;
+    }
+
+    generateTicks();
+
+    function valueToDate(value) {
+        const days = Math.floor(value);
+        return new Date(minDate.getTime() + days * 24 * 60 * 60 * 1000);
+    }
+
+    function formatDateStr(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function updateRangeSlider() {
+        const minVal = parseInt(rangeMin.value);
+        const maxVal = parseInt(rangeMax.value);
+        const minPercent = (minVal / totalDays) * 100;
+        const maxPercent = (maxVal / totalDays) * 100;
+
+        rangeSelected.style.left = minPercent + '%';
+        rangeSelected.style.width = (maxPercent - minPercent) + '%';
+
+        const startDate = valueToDate(minVal);
+        const endDate = valueToDate(maxVal);
+
+        dateStartEl.textContent = formatDateStr(startDate);
+        dateEndEl.textContent = formatDateStr(endDate);
+
+        dateStartEl.style.left = minPercent + '%';
+        dateStartEl.style.transform = 'translateX(-50%)';
+        dateEndEl.style.left = maxPercent + '%';
+        dateEndEl.style.right = 'auto';
+        dateEndEl.style.transform = 'translateX(-50%)';
+
+        tasksFilters.timeline = {
+            type: 'range',
+            startDate: startDate,
+            endDate: endDate
+        };
+
+        tasksCurrentPage = 1;
+        renderFullTasks();
+    }
+
+    const dateRangeSlider = document.querySelector('.tasks-date-range-slider');
+
+    timelineButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const year = this.dataset.tasksYear;
+
+            timelineButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            if (year === '2025') {
+                dateRangeSlider.style.display = 'block';
+                rangeMin.value = 0;
+                rangeMax.value = totalDays;
+                updateRangeSlider();
+            } else {
+                dateRangeSlider.style.display = 'none';
+                tasksFilters.timeline = { type: 'all' };
+                tasksCurrentPage = 1;
+                renderFullTasks();
+            }
+        });
+    });
+
+    rangeMin.addEventListener('input', function() {
+        if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+            rangeMin.value = rangeMax.value;
+        }
+        timelineButtons.forEach(b => b.classList.remove('active'));
+        updateRangeSlider();
+    });
+
+    rangeMax.addEventListener('input', function() {
+        if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+            rangeMax.value = rangeMin.value;
+        }
+        timelineButtons.forEach(b => b.classList.remove('active'));
+        updateRangeSlider();
+    });
+
+    // Update initial count
+    renderFullTasks();
+}
+
+// Initialize task filter listeners
+let tasksFilterListenersInitialized = false;
+function initTasksFilterListeners() {
+    if (tasksFilterListenersInitialized) return;
+    tasksFilterListenersInitialized = true;
+
+    const difficultyFilter = document.getElementById('tasksDifficultyFilter');
+    const tagFilter = document.getElementById('tasksTagFilter');
+    const searchInput = document.getElementById('tasksSearchInput');
+
+    difficultyFilter.addEventListener('change', function() {
+        tasksFilters.difficulty = this.value;
+        tasksCurrentPage = 1;
+        renderFullTasks();
+    });
+
+    tagFilter.addEventListener('change', function() {
+        tasksFilters.tag = this.value;
+        tasksCurrentPage = 1;
+        renderFullTasks();
+    });
+
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            tasksFilters.search = this.value.trim().toLowerCase();
+            tasksCurrentPage = 1;
+            renderFullTasks();
+        }, 300);
+    });
+}
+
+// Get filtered tasks based on all active filters
+function getFilteredTasks() {
+    return allTasksData.filter(task => {
+        // Timeline filter
+        if (tasksFilters.timeline.type === 'range' && task.date) {
+            const taskDate = new Date(task.date);
+            if (taskDate < tasksFilters.timeline.startDate || taskDate > tasksFilters.timeline.endDate) {
+                return false;
+            }
+        }
+
+        // Difficulty filter
+        if (tasksFilters.difficulty !== 'all' && task.difficulty !== tasksFilters.difficulty) {
+            return false;
+        }
+
+        // Tag filter
+        if (tasksFilters.tag !== 'all' && !(task.tags || []).includes(tasksFilters.tag)) {
+            return false;
+        }
+
+        // Search filter
+        if (tasksFilters.search) {
+            const query = tasksFilters.search;
+            const matchesCveId = task.cve_id.toLowerCase().includes(query);
+            const matchesInstruction = (task.instruction || '').toLowerCase().includes(query);
+            if (!matchesCveId && !matchesInstruction) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+}
+
+// Render full tasks grid with pagination
+function renderFullTasks() {
+    const container = document.getElementById('fullTasksGrid');
+    const countBadge = document.getElementById('tasksCountBadge');
+    if (!container) return;
+
+    const filtered = getFilteredTasks();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / TASKS_PER_PAGE));
+
+    // Clamp page
+    if (tasksCurrentPage > totalPages) tasksCurrentPage = totalPages;
+
+    const startIdx = (tasksCurrentPage - 1) * TASKS_PER_PAGE;
+    const pageTasks = filtered.slice(startIdx, startIdx + TASKS_PER_PAGE);
+
+    // Update count badge
+    if (countBadge) {
+        countBadge.textContent = `${filtered.length} task${filtered.length !== 1 ? 's' : ''}`;
+    }
+
+    if (pageTasks.length === 0) {
+        container.innerHTML = '<div class="task-loading">No tasks match the current filters</div>';
+    } else {
+        container.innerHTML = pageTasks.map(task => renderTaskCard(task)).join('');
+    }
+
+    renderTasksPagination(totalPages);
+}
+
+// Render pagination controls
+function renderTasksPagination(totalPages) {
+    const container = document.getElementById('tasksPagination');
+    if (!container) return;
+
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+
+    // Prev button
+    html += `<button class="pagination-btn" ${tasksCurrentPage === 1 ? 'disabled' : ''} data-page="${tasksCurrentPage - 1}">
+        <i class="fas fa-chevron-left"></i>
+    </button>`;
+
+    // Page numbers with ellipsis
+    const pages = getPaginationPages(tasksCurrentPage, totalPages);
+    pages.forEach(p => {
+        if (p === '...') {
+            html += '<span class="pagination-ellipsis">...</span>';
+        } else {
+            html += `<button class="pagination-btn ${p === tasksCurrentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+        }
+    });
+
+    // Next button
+    html += `<button class="pagination-btn" ${tasksCurrentPage === totalPages ? 'disabled' : ''} data-page="${tasksCurrentPage + 1}">
+        <i class="fas fa-chevron-right"></i>
+    </button>`;
+
+    container.innerHTML = html;
+
+    // Bind click events
+    container.querySelectorAll('.pagination-btn:not(:disabled)').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const page = parseInt(this.dataset.page);
+            if (page >= 1 && page <= totalPages) {
+                tasksCurrentPage = page;
+                renderFullTasks();
+                document.getElementById('full-tasks').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+// Generate page numbers with ellipsis (e.g., 1 ... 4 5 6 ... 10)
+function getPaginationPages(current, total) {
+    if (total <= 7) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const pages = [];
+    pages.push(1);
+
+    if (current > 3) {
+        pages.push('...');
+    }
+
+    const start = Math.max(2, current - 1);
+    const end = Math.min(total - 1, current + 1);
+
+    for (let i = start; i <= end; i++) {
+        pages.push(i);
+    }
+
+    if (current < total - 2) {
+        pages.push('...');
+    }
+
+    pages.push(total);
+    return pages;
+}
+
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -905,5 +1276,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+// Citation copy button
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('copyCitationBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+            const code = copyBtn.closest('.citation-block').querySelector('code');
+            navigator.clipboard.writeText(code.textContent).then(() => {
+                const icon = copyBtn.querySelector('i');
+                icon.className = 'fas fa-check';
+                setTimeout(() => { icon.className = 'fas fa-copy'; }, 2000);
+            });
+        });
+    }
 });
 

@@ -164,6 +164,93 @@
                         <i class="fas fa-spinner fa-spin"></i> Loading sample tasks...
                     </div>
                 </div>
+
+                <div class="has-text-centered mt-5">
+                    <button class="button is-primary is-medium" id="viewAllTasksBtn">
+                        <span class="icon"><i class="fas fa-th"></i></span>
+                        <span>View All Tasks</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Tasks Section -->
+    <section class="section full-tasks-section" id="full-tasks" style="display: none;">
+        <div class="container">
+            <div class="content-box">
+                <div class="full-tasks-header">
+                    <h2 class="title is-3 section-title">
+                        <span class="icon"><i class="fas fa-list-alt"></i></span>
+                        All CVE Tasks
+                    </h2>
+                    <button class="button is-light" id="closeFullTasksBtn">
+                        <span class="icon"><i class="fas fa-times"></i></span>
+                        <span>Close</span>
+                    </button>
+                </div>
+
+                <!-- Timeline Filter -->
+                <div class="tasks-timeline-filter mb-4">
+                    <div class="timeline-header">
+                        <div class="timeline-buttons">
+                            <button class="button timeline-btn active" data-tasks-year="all">All</button>
+                            <button class="button timeline-btn" data-tasks-year="2025">2025</button>
+                        </div>
+                        <span class="tasks-count-badge" id="tasksCountBadge"></span>
+                    </div>
+                    <div class="tasks-date-range-slider" style="display: none;">
+                        <div class="range-slider-container">
+                            <span class="date-label date-start" id="tasksDateStart">2025-01-01</span>
+                            <div class="range-track"></div>
+                            <div class="range-selected" id="tasksRangeSelected"></div>
+                            <input type="range" id="tasksRangeMin" class="range-input" min="0" max="364" value="0">
+                            <input type="range" id="tasksRangeMax" class="range-input" min="0" max="364" value="364">
+                            <span class="date-label date-end" id="tasksDateEnd">2025-12-31</span>
+                        </div>
+                        <div class="timeline-ticks" id="tasksTimelineTicks"></div>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="tasks-filters mb-4">
+                    <div class="filter-group">
+                        <label class="filter-label">Difficulty</label>
+                        <div class="select">
+                            <select id="tasksDifficultyFilter">
+                                <option value="all">All</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Tag</label>
+                        <div class="select">
+                            <select id="tasksTagFilter">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Search</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" id="tasksSearchInput" placeholder="CVE ID or keyword...">
+                            <span class="icon is-left"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Tasks Grid -->
+                <div class="tasks-grid" id="fullTasksGrid">
+                    <div class="task-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading tasks...
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container has-text-centered mt-5" id="tasksPagination"></div>
             </div>
         </div>
     </section>
@@ -410,6 +497,33 @@
         </div>
     </section>
 
+    <!-- Citation Section -->
+    <section class="section" id="citation">
+        <div class="container">
+            <div class="content-box">
+                <h2 class="title is-3 section-title">
+                    <span class="icon"><i class="fas fa-quote-left"></i></span>
+                    Citation
+                </h2>
+                <p>If you find our work useful, please cite our paper:</p>
+                <div class="citation-block">
+                    <button class="citation-copy-btn" id="copyCitationBtn" title="Copy to clipboard">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <pre><code>@misc{luo2026cvefactoryscalingexpertlevelagentic,
+      title={CVE-Factory: Scaling Expert-Level Agentic Tasks for Code Security Vulnerability},
+      author={Xianzhen Luo and Jingyuan Zhang and Shiqi Zhou and Rain Huang and Chuan Xiao and Qingfu Zhu and Zhiyuan Ma and Xing Yue and Yang Yue and Wencong Zeng and Wanxiang Che},
+      year={2026},
+      eprint={2602.03012},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2602.03012},
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -430,6 +544,6 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=9"></script>
+    <script src="js/main.js?v=10"></script>
 </body>
 </html>
