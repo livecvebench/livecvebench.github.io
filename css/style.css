@@ -534,6 +534,40 @@ body {
     color: #60a5fa;
 }
 
+/* About content inside cve-factory-section (dark background) */
+.cve-factory-content .content p {
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.cve-factory-content .content strong {
+    color: #60a5fa;
+}
+
+/* Feature cards on dark background */
+.cve-factory-section .feature-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cve-factory-section .feature-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.cve-factory-section .feature-card h4 {
+    color: #ffffff;
+}
+
+.cve-factory-section .feature-card p {
+    color: #94a3b8;
+}
+
+.cve-factory-section .feature-icon {
+    color: #06b6d4;
+}
+
 .pipeline-image-container {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 16px;
