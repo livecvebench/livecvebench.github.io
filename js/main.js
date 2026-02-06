@@ -111,9 +111,6 @@ async function loadLeaderboard() {
         // Render sample tasks
         renderSampleTasks();
 
-        // Initialize tabs
-        initTabs();
-
         // Populate filter dropdowns
         populateFilters();
 
@@ -291,36 +288,6 @@ function renderSampleTasks() {
     }).join('');
 
     container.innerHTML = html;
-}
-
-// Initialize instruction type tabs
-function initTabs() {
-    const tabs = document.querySelectorAll('.tabs li[data-tab]');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Update active state
-            tabs.forEach(t => t.classList.remove('is-active'));
-            this.classList.add('is-active');
-
-            // Switch data source
-            currentInstructionType = this.dataset.tab;
-            leaderboardData = allResultsData[currentInstructionType] || [];
-            cveData = cveDataByType[currentInstructionType] || [];
-
-            // Update total CVE count
-            document.getElementById('totalCVEs').textContent = cveData.length;
-
-            // Re-populate filters for new data
-            repopulateFilters();
-
-            // Update timeline CVE count
-            updateTimelineCVECount();
-
-            // Re-render
-            renderLeaderboard();
-        });
-    });
 }
 
 // Re-populate filter dropdowns when switching tabs
