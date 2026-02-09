@@ -1227,6 +1227,12 @@ body {
     margin-bottom: 1rem;
 }
 
+.timeline-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
 .timeline-buttons {
     display: flex;
     align-items: center;

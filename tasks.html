@@ -75,19 +75,16 @@
                 <!-- Timeline Filter -->
                 <div class="tasks-timeline-filter mb-4">
                     <div class="timeline-header">
-                        <div class="timeline-buttons">
-                            <button class="button timeline-btn active" data-tasks-year="all">All</button>
-                            <button class="button timeline-btn" data-tasks-year="2025">2025</button>
-                        </div>
+                        <span class="timeline-label"><i class="fas fa-calendar-alt"></i> Timeline</span>
                         <span class="tasks-count-badge" id="tasksCountBadge"></span>
                     </div>
-                    <div class="tasks-date-range-slider" style="display: none;">
+                    <div class="tasks-date-range-slider">
                         <div class="range-slider-container">
                             <span class="date-label date-start" id="tasksDateStart">2025-01-01</span>
                             <div class="range-track"></div>
                             <div class="range-selected" id="tasksRangeSelected"></div>
-                            <input type="range" id="tasksRangeMin" class="range-input" min="0" max="364" value="0">
-                            <input type="range" id="tasksRangeMax" class="range-input" min="0" max="364" value="364">
+                            <input type="range" id="tasksRangeMin" class="range-input" min="0" max="100" value="0">
+                            <input type="range" id="tasksRangeMax" class="range-input" min="0" max="100" value="100">
                             <span class="date-label date-end" id="tasksDateEnd">2025-12-31</span>
                         </div>
                         <div class="timeline-ticks" id="tasksTimelineTicks"></div>

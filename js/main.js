@@ -747,7 +747,6 @@ function initFilters() {
 function initTimeline() {
     const leaderboardTimeline = document.querySelector('#leaderboard .timeline-filter');
     if (!leaderboardTimeline) return;
-    const timelineButtons = leaderboardTimeline.querySelectorAll('.timeline-btn');
     const rangeMin = document.getElementById('rangeMin');
     const rangeMax = document.getElementById('rangeMax');
     const rangeSelected = document.getElementById('rangeSelected');
@@ -755,76 +754,79 @@ function initTimeline() {
     const dateEndEl = document.getElementById('dateEnd');
     const timelineTicks = document.getElementById('timelineTicks');
 
-    // 2025 only timeline
+    // Compute end date from CVE data: last day of the month of the latest CVE
     const minDate = new Date('2025-01-01');
-    const maxDate = new Date('2025-12-31');
-    const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24)); // 364
+    let maxDate;
+    const dates = allCveData.map(c => c.date).filter(Boolean).sort();
+    if (dates.length > 0) {
+        const latest = new Date(dates[dates.length - 1]);
+        maxDate = new Date(latest.getFullYear(), latest.getMonth() + 1, 0); // last day of that month
+    } else {
+        maxDate = new Date('2025-12-31');
+    }
+    const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24));
 
-    // Generate tick marks for 2025 months (1/1 to 12/1) and 12/31
-    // Note: Browser slider thumb position = thumbWidth/2 + (value/max) * (trackWidth - thumbWidth)
-    // To align ticks with thumb center, we use: calc(10px + percent * (100% - 20px))
-    // where 10px = half thumb width, 20px = full thumb width
+    rangeMin.max = totalDays;
+    rangeMax.max = totalDays;
+    rangeMin.value = 0;
+    rangeMax.value = totalDays;
+
+    // Generate tick marks for 1st of each month within range
     function generateTicks() {
         let html = '';
-        // Add ticks for the 1st of each month (1/1 to 12/1)
-        for (let month = 0; month < 12; month++) {
-            const tickDate = new Date(2025, month, 1);
+        const startMonth = minDate.getMonth();
+        const endMonth = maxDate.getMonth() + (maxDate.getFullYear() - minDate.getFullYear()) * 12;
+        for (let m = startMonth; m <= endMonth; m++) {
+            const tickDate = new Date(2025, m, 1);
+            if (tickDate < minDate || tickDate > maxDate) continue;
             const daysSinceStart = Math.floor((tickDate - minDate) / (1000 * 60 * 60 * 24));
             const percent = daysSinceStart / totalDays;
-            // Use calc to match browser's slider thumb position
             const position = `calc(10px + ${percent * 100}% - ${percent * 20}px)`;
-            html += `<span class="timeline-tick" style="left: ${position}">${month + 1}/1</span>`;
+            const label = `${tickDate.getMonth() + 1}/1`;
+            html += `<span class="timeline-tick" style="left: ${position}">${label}</span>`;
         }
-        // Add tick for 12/31 at the end (percent = 1)
+        // End tick
         const endPosition = `calc(10px + 100% - 20px)`;
-        html += `<span class="timeline-tick" style="left: ${endPosition}">12/31</span>`;
+        const em = maxDate.getMonth() + 1;
+        const ed = maxDate.getDate();
+        html += `<span class="timeline-tick" style="left: ${endPosition}">${em}/${ed}</span>`;
         timelineTicks.innerHTML = html;
     }
 
     generateTicks();
 
-    // Convert slider value (0-364) to date
     function valueToDate(value) {
-        const days = Math.floor(value);
-        const date = new Date(minDate.getTime() + days * 24 * 60 * 60 * 1000);
-        return date;
+        return new Date(minDate.getTime() + Math.floor(value) * 24 * 60 * 60 * 1000);
     }
 
-    // Format date as YYYY-MM-DD
     function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
     }
 
-    // Update range slider visual and filter
     function updateRangeSlider() {
         const minVal = parseInt(rangeMin.value);
         const maxVal = parseInt(rangeMax.value);
-
-        // Calculate percentage positions (0-364 -> 0-100%)
         const minPercent = (minVal / totalDays) * 100;
         const maxPercent = (maxVal / totalDays) * 100;
 
         rangeSelected.style.left = minPercent + '%';
         rangeSelected.style.width = (maxPercent - minPercent) + '%';
 
-        // Update date labels position and text
         const startDate = valueToDate(minVal);
         const endDate = valueToDate(maxVal);
 
         dateStartEl.textContent = formatDate(startDate);
         dateEndEl.textContent = formatDate(endDate);
 
-        // Position labels above the slider thumbs
         dateStartEl.style.left = minPercent + '%';
         dateStartEl.style.transform = 'translateX(-50%)';
         dateEndEl.style.left = maxPercent + '%';
         dateEndEl.style.right = 'auto';
         dateEndEl.style.transform = 'translateX(-50%)';
 
-        // Update filter
         currentFilters.timeline = {
             type: 'range',
             startDate: startDate,
@@ -835,76 +837,22 @@ function initTimeline() {
         renderLeaderboard();
     }
 
-    // Get the slider container
-    const dateRangeSlider = document.querySelector('.date-range-slider');
-
-    // Button clicks
-    timelineButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const year = this.dataset.year;
-
-            // Update button states
-            timelineButtons.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-
-            if (year === '2025') {
-                // Show slider for 2025
-                dateRangeSlider.style.display = 'block';
-
-                // Set slider to full 2025 range (0-364 days)
-                rangeMin.value = 0;
-                rangeMax.value = totalDays;
-
-                updateRangeSlider();
-            } else {
-                // Hide slider for All/2023/2024
-                dateRangeSlider.style.display = 'none';
-
-                // Update filter directly
-                if (year === 'all') {
-                    currentFilters.timeline = { type: 'all' };
-                } else {
-                    currentFilters.timeline = { type: 'year', year: parseInt(year) };
-                }
-
-                updateTimelineCVECount();
-                renderLeaderboard();
-            }
-        });
-    });
-
-    // Range slider events
     rangeMin.addEventListener('input', function() {
-        const minVal = parseInt(rangeMin.value);
-        const maxVal = parseInt(rangeMax.value);
-
-        if (minVal > maxVal) {
-            rangeMin.value = maxVal;
+        if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+            rangeMin.value = rangeMax.value;
         }
-
-        // Deselect year buttons when manually adjusting
-        timelineButtons.forEach(b => b.classList.remove('active'));
-
         updateRangeSlider();
     });
 
     rangeMax.addEventListener('input', function() {
-        const minVal = parseInt(rangeMin.value);
-        const maxVal = parseInt(rangeMax.value);
-
-        if (maxVal < minVal) {
-            rangeMax.value = minVal;
+        if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+            rangeMax.value = rangeMin.value;
         }
-
-        // Deselect year buttons when manually adjusting
-        timelineButtons.forEach(b => b.classList.remove('active'));
-
         updateRangeSlider();
     });
 
-    // Initialize with "All" (not 2025 range)
-    currentFilters.timeline = { type: 'all' };
-    updateTimelineCVECount();
+    // Initialize: full range selected
+    updateRangeSlider();
 }
 
 // Initialize sorting
@@ -965,7 +913,6 @@ function initTasksTimeline() {
     if (tasksTimelineInitialized) return;
     tasksTimelineInitialized = true;
 
-    const timelineButtons = document.querySelectorAll('.tasks-timeline-filter .timeline-btn');
     const rangeMin = document.getElementById('tasksRangeMin');
     const rangeMax = document.getElementById('tasksRangeMax');
     const rangeSelected = document.getElementById('tasksRangeSelected');
@@ -973,37 +920,53 @@ function initTasksTimeline() {
     const dateEndEl = document.getElementById('tasksDateEnd');
     const timelineTicks = document.getElementById('tasksTimelineTicks');
 
+    // Compute end date from tasks data: last day of the month of the latest task
     const minDate = new Date('2025-01-01');
-    const maxDate = new Date('2025-12-31');
+    let maxDate;
+    const dates = allTasksData.map(t => t.date).filter(Boolean).sort();
+    if (dates.length > 0) {
+        const latest = new Date(dates[dates.length - 1]);
+        maxDate = new Date(latest.getFullYear(), latest.getMonth() + 1, 0);
+    } else {
+        maxDate = new Date('2025-12-31');
+    }
     const totalDays = Math.floor((maxDate - minDate) / (1000 * 60 * 60 * 24));
+
+    rangeMin.max = totalDays;
+    rangeMax.max = totalDays;
+    rangeMin.value = 0;
+    rangeMax.value = totalDays;
 
     // Generate tick marks
     function generateTicks() {
         let html = '';
-        for (let month = 0; month < 12; month++) {
-            const tickDate = new Date(2025, month, 1);
+        const endMonth = maxDate.getMonth() + (maxDate.getFullYear() - minDate.getFullYear()) * 12;
+        for (let m = 0; m <= endMonth; m++) {
+            const tickDate = new Date(2025, m, 1);
+            if (tickDate > maxDate) continue;
             const daysSinceStart = Math.floor((tickDate - minDate) / (1000 * 60 * 60 * 24));
             const percent = daysSinceStart / totalDays;
             const position = `calc(10px + ${percent * 100}% - ${percent * 20}px)`;
-            html += `<span class="timeline-tick" style="left: ${position}">${month + 1}/1</span>`;
+            html += `<span class="timeline-tick" style="left: ${position}">${tickDate.getMonth() + 1}/1</span>`;
         }
         const endPosition = `calc(10px + 100% - 20px)`;
-        html += `<span class="timeline-tick" style="left: ${endPosition}">12/31</span>`;
+        const em = maxDate.getMonth() + 1;
+        const ed = maxDate.getDate();
+        html += `<span class="timeline-tick" style="left: ${endPosition}">${em}/${ed}</span>`;
         timelineTicks.innerHTML = html;
     }
 
     generateTicks();
 
     function valueToDate(value) {
-        const days = Math.floor(value);
-        return new Date(minDate.getTime() + days * 24 * 60 * 60 * 1000);
+        return new Date(minDate.getTime() + Math.floor(value) * 24 * 60 * 60 * 1000);
     }
 
     function formatDateStr(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
     }
 
     function updateRangeSlider() {
@@ -1037,34 +1000,10 @@ function initTasksTimeline() {
         renderFullTasks();
     }
 
-    const dateRangeSlider = document.querySelector('.tasks-date-range-slider');
-
-    timelineButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const year = this.dataset.tasksYear;
-
-            timelineButtons.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-
-            if (year === '2025') {
-                dateRangeSlider.style.display = 'block';
-                rangeMin.value = 0;
-                rangeMax.value = totalDays;
-                updateRangeSlider();
-            } else {
-                dateRangeSlider.style.display = 'none';
-                tasksFilters.timeline = { type: 'all' };
-                tasksCurrentPage = 1;
-                renderFullTasks();
-            }
-        });
-    });
-
     rangeMin.addEventListener('input', function() {
         if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
             rangeMin.value = rangeMax.value;
         }
-        timelineButtons.forEach(b => b.classList.remove('active'));
         updateRangeSlider();
     });
 
@@ -1072,12 +1011,11 @@ function initTasksTimeline() {
         if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
             rangeMax.value = rangeMin.value;
         }
-        timelineButtons.forEach(b => b.classList.remove('active'));
         updateRangeSlider();
     });
 
-    // Update initial count
-    renderFullTasks();
+    // Initialize: full range selected
+    updateRangeSlider();
 }
 
 // Initialize task filter listeners
