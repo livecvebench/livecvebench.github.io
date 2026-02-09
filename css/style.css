@@ -726,9 +726,9 @@ body {
     text-align: right;
 }
 
-.performer-accuracy.score-high { color: #22d3ee; }
-.performer-accuracy.score-medium { color: #a78bfa; }
-.performer-accuracy.score-low { color: #f0abfc; }
+.performer-accuracy.score-high { color: var(--success-color); }
+.performer-accuracy.score-medium { color: var(--warning-color); }
+.performer-accuracy.score-low { color: var(--danger-color); }
 
 .performer-bar-container {
     position: relative;
@@ -742,7 +742,7 @@ body {
     height: 100%;
     border-radius: 4px;
     transition: width 1s ease-out;
-    background: linear-gradient(90deg, var(--primary-color), #22d3ee);
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
 }
 
 @media screen and (max-width: 768px) {
