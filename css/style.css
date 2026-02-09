@@ -690,8 +690,8 @@ body {
     gap: 0.2rem;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #f59e0b;
-    background: rgba(245, 158, 11, 0.12);
+    color: #22d3ee;
+    background: rgba(6, 182, 212, 0.15);
     padding: 0.1rem 0.45rem;
     border-radius: 9999px;
     margin-left: 0.4rem;
@@ -703,8 +703,8 @@ body {
 }
 
 .performer-ours {
-    background: rgba(245, 158, 11, 0.06);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.25);
     border-radius: 8px;
 }
 
