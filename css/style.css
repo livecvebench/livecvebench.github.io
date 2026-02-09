@@ -683,6 +683,31 @@ body {
     font-size: 1.05rem;
 }
 
+/* Ours badge for Abacus-CVE */
+.ours-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.12);
+    padding: 0.1rem 0.45rem;
+    border-radius: 9999px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.ours-badge i {
+    font-size: 0.6rem;
+}
+
+.performer-ours {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+}
+
 .performer-agent {
     font-size: 0.9rem;
     color: var(--text-muted);

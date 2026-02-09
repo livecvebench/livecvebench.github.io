@@ -260,11 +260,16 @@ function renderTopPerformers() {
         const accuracyPercent = (item.accuracy * 100).toFixed(1);
         const scoreClass = item.accuracy >= 0.7 ? 'score-high' : item.accuracy >= 0.4 ? 'score-medium' : 'score-low';
 
+        const isOurs = item.model === 'Abacus-CVE';
+        const modelLabel = isOurs
+            ? `<span class="performer-model">${item.model} <span class="ours-badge"><i class="fas fa-star"></i> Ours</span></span>`
+            : `<span class="performer-model">${item.model}</span>`;
+
         return `
-            <div class="performer-item">
+            <div class="performer-item ${isOurs ? 'performer-ours' : ''}">
                 <div class="performer-rank ${rankClass}">${rank}</div>
                 <div class="performer-info">
-                    <div class="performer-model">${item.model}</div>
+                    <div>${modelLabel}</div>
                     <div class="performer-agent">${item.agent}</div>
                 </div>
                 <div class="performer-accuracy ${scoreClass}">${accuracyPercent}%</div>
