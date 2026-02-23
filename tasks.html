@@ -151,6 +151,28 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=11"></script>
+    <!-- Task Detail Modal -->
+    <div class="modal" id="taskDetailModal">
+        <div class="modal-background" onclick="closeTaskDetail()"></div>
+        <div class="modal-card task-detail-modal">
+            <header class="modal-card-head">
+                <div class="modal-card-title">
+                    <span class="task-cve-id" id="modalCveId"></span>
+                    <span id="modalDifficulty" class="task-difficulty"></span>
+                </div>
+                <button class="delete" aria-label="close" onclick="closeTaskDetail()"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="modal-date mb-3">
+                    <i class="fas fa-calendar"></i> <span id="modalDate"></span>
+                </div>
+                <div class="modal-tags mb-4" id="modalTags"></div>
+                <h4 class="modal-section-label">Task Instruction</h4>
+                <div class="modal-instruction" id="modalInstruction"></div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/main.js?v=12"></script>
 </body>
 </html>

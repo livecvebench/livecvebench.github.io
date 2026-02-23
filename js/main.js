@@ -293,7 +293,7 @@ function renderTaskCard(task) {
     `).join('');
 
     return `
-        <div class="task-card">
+        <div class="task-card" data-cve-id="${escapeHtml(task.cve_id)}">
             <div class="task-header">
                 <span class="task-cve-id">${escapeHtml(task.cve_id)}</span>
                 <span class="task-difficulty ${difficulty}">${difficulty}</span>
@@ -308,6 +308,61 @@ function renderTaskCard(task) {
         </div>
     `;
 }
+
+// Open task detail modal
+function openTaskDetail(cveId) {
+    const task = allTasksData.find(t => t.cve_id === cveId);
+    if (!task) return;
+
+    const modal = document.getElementById('taskDetailModal');
+    if (!modal) return;
+
+    // Populate modal content
+    document.getElementById('modalCveId').textContent = task.cve_id;
+    const diffEl = document.getElementById('modalDifficulty');
+    diffEl.textContent = task.difficulty || 'medium';
+    diffEl.className = 'task-difficulty ' + (task.difficulty || 'medium');
+
+    document.getElementById('modalDate').textContent = task.date || 'Unknown date';
+
+    // Full instruction with preserved formatting
+    const instructionEl = document.getElementById('modalInstruction');
+    instructionEl.textContent = task.instruction || 'No instruction available';
+
+    // All tags
+    const tagsEl = document.getElementById('modalTags');
+    const tags = task.tags || [];
+    tagsEl.innerHTML = tags.map(tag => `
+        <span class="task-tag">
+            <i class="fas fa-tag"></i> ${escapeHtml(tag)}
+        </span>
+    `).join('');
+
+    modal.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close task detail modal
+function closeTaskDetail() {
+    const modal = document.getElementById('taskDetailModal');
+    if (modal) {
+        modal.classList.remove('is-active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTaskDetail();
+});
+
+// Event delegation for task card clicks
+document.addEventListener('click', function(e) {
+    const card = e.target.closest('.task-card[data-cve-id]');
+    if (card) {
+        openTaskDetail(card.dataset.cveId);
+    }
+});
 
 // Escape HTML to prevent XSS
 function escapeHtml(str) {
