@@ -12,6 +12,7 @@ Example:
 import json
 import sys
 import os
+import re
 from datetime import datetime
 
 def main():
@@ -25,7 +26,10 @@ def main():
         if not merged_files:
             print("Error: No merged_results file found in data/")
             sys.exit(1)
-        merged_files.sort()
+        # Sort by the numeric version suffix so v35 is selected after v9.
+        merged_files.sort(
+            key=lambda name: int(re.search(r'_v(\d+)\.json$', name).group(1))
+        )
         merged_file = os.path.join(data_dir, merged_files[-1])
         print(f"Using latest: {merged_files[-1]}")
 
