@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "lastUpdated": "2026-10-27",
+    "lastUpdated": "2026-11-03",
     "version": "1.0.0"
   },
   "cves": [
@@ -32383,8 +32383,8 @@
         }
       },
       {
-        "model": "VR-1.1",
-        "agent": "VR-1.1",
+        "model": "Cogent VR-1.1",
+        "agent": "Cogent VR-1.1",
         "modelType": "closed",
         "agentType": "closed",
         "cve_results": {
